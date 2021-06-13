@@ -1,3 +1,5 @@
+TODO: Adjust some things in accordance with ux. For example, move "New" button from sidebar to filesView. Also sideIcons(on the right) may be removed.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
