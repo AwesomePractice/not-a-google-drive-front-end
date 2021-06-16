@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector} from 'react-redux'
 import '../../styles/FilesView.css'
 import '../../styles/main.css'
@@ -9,48 +9,49 @@ import FileCard from './FileCard'
 import { db } from '../../firebase'
 
 const FilesView = () => {
-    const [files, setFiles] = useState([])
 
     const page = useSelector((state) => state.page)
-    const favorites = useSelector((state) => state.favorites)
+    const files = useSelector((state) => state.files)
+
+    console.log(files)
 
     let favoriteFiles = []
     let current = []
 
     useEffect(() => {
-        db.collection('myFiles').onSnapshot(snapshot => {
-            setFiles(snapshot.docs.map(doc => ({
-                id: doc.id,
-                item: doc.data()
-            })))
-        });
+        // db.collection('myFiles').onSnapshot(snapshot => {
+        //     setFiles(snapshot.docs.map(doc => ({
+        //         id: doc.id,
+        //         item: doc.data()
+        //     })))
+        // });
 
         
     }, [])
     
-    useEffect(() => {
-        favoriteFiles = files.filter((elem) => favorites.includes(elem.id))
-    }, [favorites])
+    // useEffect(() => {
+    //     favoriteFiles = files.filter((elem) => favorites.includes(elem.id))
+    // }, [files])
 
     const homeFiles_titles = () => {
-        current = favoriteFiles
-        console.log("home ", current.length)
-        return files.map(({ id, item }) => (
-            <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={favorites.includes(id)}/>
-        ))
+        // current = favoriteFiles
+        // console.log("home ", current.length)
+        // return files.map(({ id, item }) => (
+        //     <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={item.isFavorite}/>
+        // ))
 
     }
 
     const homeFiles_row = () => {
-        return files.slice(0, 5).map(({ id, item }) => (
-            <FileCard name={item.caption} /> ))
+        // return files.slice(0, 5).map(({ id, item }) => (
+        //     <FileCard name={item.caption} /> ))
     }
 
     const favoriteFiles_titles = () => {
-        console.log("favorite ", favoriteFiles.length)
-        return favoriteFiles.map(({ id, item }) => (
-            <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
-        ))
+        // console.log("favorite ", favoriteFiles.length)
+        // return favoriteFiles.map(({ id, item }) => (
+        //     <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
+        // ))
 
     }
 
@@ -58,7 +59,7 @@ const FilesView = () => {
         <div className='fileView'>
             { page === "home" && 
                 <div className='fileView_row'>
-                    homeFiles_row()
+                    { homeFiles_row()}
                 </div>
             }
             

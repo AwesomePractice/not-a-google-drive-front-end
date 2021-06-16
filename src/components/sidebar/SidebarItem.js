@@ -6,6 +6,7 @@ import '../../styles/SidebarItem.css'
 
 const SidebarItem = ({icon, label, pageName}) => {
     const dispatch = useDispatch()
+    const page = useSelector((state) => state.page)
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -14,10 +15,18 @@ const SidebarItem = ({icon, label, pageName}) => {
 
     return (
         <button className='sidebarItem' onClick={handleClick}>
-            <div className='sidebarItem_main'>
-                {icon}
-                <p>{label}</p>
-            </div>
+            {
+                page === pageName ? (
+                    <div className='sidebarItem_main selected' >
+                        {icon}
+                        <p> {label} </p>
+                    </div>) : (
+                    <div className='sidebarItem_main' >
+                        {icon}
+                        <p> {label} </p>
+                    </div>        
+                )
+            }
         </button>
     )
 }
