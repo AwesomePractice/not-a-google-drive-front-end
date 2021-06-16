@@ -41,12 +41,12 @@ function App() {
       {
         user ? (
           <>
-          <Header userPhoto={user.photoUrl}/>
-          <div className="app_main">
-            <Sidebar/>
-            <FilesView/>
-            <SideIcons/>
-          </div>
+            <Header userPhoto={user.photoUrl} className/>
+            <div className="app_main container">
+              <Sidebar/>
+              <FilesView/>
+              {/* <SideIcons/> */}
+            </div>
           </>
         ) : (
           <div className='app_login'>

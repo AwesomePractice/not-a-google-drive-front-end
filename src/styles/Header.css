@@ -1,8 +1,12 @@
 .header {
     display: flex;
-    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
     border-bottom: 1px solid rgb(219, 219, 219);
-    width: 100vw;
+
+    background-color: #0492c2;
+    color: #fff;
 }
 
 .header>div {
@@ -16,44 +20,55 @@
 }
 
 .header_logo>img {
-    height: 100%;
+    height: 40px;
     object-fit: contain;
 }
 
 .header_logo>span {
-    color: gray;
     font-size: 20px;
     font-weight: 500;
     margin-left: 16px;
 }
 
 .header_searchContainer {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    padding: 8px;
+    width: 50%;
+    height: 50px;
 }
 
 .header_searchbar {
-    width: 45%;
+    width: 100%;
     min-width: 220px;
-    height: 120%;
+    height: 100%;
     border-radius: 6px;
-    background-color: rgb(237, 237, 237);
+    background-color: #63c5da;
     display: flex;
     align-items: center;
-    padding: 0 8px;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.header_searchbar .MuiSvgIcon-root{
+    color: #fff;
+}
+
+.header_searchbar input{
+    background: transparent;
+    border: none;
+}
+
+.header_searchbar input::placeholder{
+    color: #fff;
 }
 
 .MuiSvgIcon-root {
-    color: rgb(82, 82, 82);
+    color: #828282;
 }
 
 .header_searchBar>input {
     flex: 1;
     height: 60%;
     font-size: 16px;
-    color: lightgray;
+    color: #fff;
     background: none;
     border: none;
     margin-left: 12px;
@@ -71,12 +86,15 @@
 
 .header_icons .MuiSvgIcon-root {
     font-size: 28px;
-    color: rgb(82, 82, 82);
     margin: 4px;
 }
 
 .header_icons>span{
     margin-right: 20px;
+}
+
+.header_icons>span .MuiSvgIcon-root{
+    color: #fff;
 }
 
 .header_icons>img{
