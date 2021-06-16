@@ -1,11 +1,15 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/SidebarItem.css'
 
 
-const SidebarItem = ({icon, label, page}) => {
+
+const SidebarItem = ({icon, label, pageName}) => {
+    const dispatch = useDispatch()
+
     const handleClick = (e) => {
-        e.preventDefault();
-        alert('Clicked')
+        e.preventDefault()
+        dispatch({ type: "page/setPage", payload: pageName })
     }
 
     return (

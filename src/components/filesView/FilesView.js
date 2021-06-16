@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector} from 'react-redux'
 import '../../styles/FilesView.css'
 import '../../styles/main.css'
 
@@ -9,7 +10,8 @@ import { db } from '../../firebase'
 
 const FilesView = () => {
     const [files, setFiles] = useState([])
-    const [page, setPage] = useState("home")
+
+    const page = useSelector((state) => state.page)
 
     let favoriteFiles = []
 
