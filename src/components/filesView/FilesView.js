@@ -11,13 +11,11 @@ import { FilterSharp } from '@material-ui/icons'
 
 const FilesView = () => {
     const [files, setFiles] = useState([])
-    const [page, setPage] = useState("home")
 
-    let favoriteFiles = []
-
+    
     const page = useSelector((state) => state.page)
     const favorites = useSelector((state) => state.favorites)
-
+    
     let favoriteFiles = []
     let current = []
 
@@ -61,38 +59,10 @@ const FilesView = () => {
 
     }
 
-    const favoriteFiles_row = () => {
-        return favoriteFiles.slice(0, 5).map(({ id, item }) => (
-            <FileCard name={item.caption} /> ))
-    }
-
-    const homeFiles_titles = () => {
-        return files.map(({ id, item }) => (
-            <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} />
-        ))
-    }
-
-    const homeFiles_row = () => {
-        return files.slice(0, 5).map(({ id, item }) => (
-            <FileCard name={item.caption} /> ))
-    }
-
-    const favoriteFiles_titles = () => {
-        return favoriteFiles.map(({ id, item }) => (
-            <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} />
-        ))
-    }
-
-    const favoriteFiles_row = () => {
-        return favoriteFiles.slice(0, 5).map(({ id, item }) => (
-            <FileCard name={item.caption} /> ))
-    }
-
     return (
         <div className='fileView'>
             <div className='fileView_row'>
                 { page === "home" && homeFiles_row() }
-                { page === "favorite" && favoriteFiles_row() }
             </div>
             <div className='filesView_titles'>
 
