@@ -4,29 +4,22 @@ import '../../styles/Sidebar.css'
 import NewFile from './NewFile'
 import SidebarItem from './SidebarItem';
 
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
+import HomeIcon from '@material-ui/icons/Home';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import StorageIcon from '@material-ui/icons/Storage';
 
 const index = () => {
     return (
-        <div className='sideBar'>
-            <NewFile/>
+        <div className='sidebar'>
             <div className="sidebar_itemsContainer">
-                <SidebarItem arrow icon={(<InsertDriveFileIcon />)} label={'My Drive'} />
-                <SidebarItem arrow icon={(<ImportantDevicesIcon />)} label={'Computers'} />
+                <SidebarItem icon={(<HomeIcon />)} label={'Home page'} page="home" />
                 <SidebarItem icon={(<PeopleAltIcon />)} label={'Shared with me'} />
-                <SidebarItem icon={(<QueryBuilderIcon />)} label={'Recent'} />
-                <SidebarItem icon={(<StarBorderIcon />)} label={'Starred'} />
-                <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Bin'} />
-
-                <hr/>
-                <SidebarItem icon={(<StorageIcon />)} label={'Storage'} />
-            </div>            
+                <SidebarItem icon={(<StarBorderIcon />)} label={'Favorites'} page="favorite" />
+                <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Deleted'} />
+                
+            </div>
+            <NewFile/>       
         </div>
     )
 }

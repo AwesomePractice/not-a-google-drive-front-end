@@ -82,7 +82,7 @@ const NewFile = () => {
         <div className="newFile">
             <div className="newFile_container" onClick={handleOpen}>
                 <AddIcon/>
-                <p>New</p>
+                <p>Upload</p>
             </div>
 
             <Modal

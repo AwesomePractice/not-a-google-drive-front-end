@@ -11,16 +11,15 @@ import AppsIcon from '@material-ui/icons/Apps';
 
 const index = ({ userPhoto }) => {
     return (
-        <div className='header'>
+        <div className='header container'>
             <div className="header_logo">
                 <img src={NotGoogleDriveLogo} alt="NotGoogleDrive"/>
                 <span>NotGoogleDrive</span>
             </div>
             <div className="header_searchContainer">
                 <div className="header_searchbar">
-                    <SearchIcon />
                     <input type="text" placeholder='Search in Drive' />
-                    <ExpandMoreIcon />
+                    <SearchIcon />
                 </div>
             </div>
             <div className="header_icons">
