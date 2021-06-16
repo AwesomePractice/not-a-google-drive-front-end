@@ -7,7 +7,6 @@ import FileItem from './FileItem'
 import FileCard from './FileCard'
 
 import { db } from '../../firebase'
-import { FilterSharp } from '@material-ui/icons'
 
 const FilesView = () => {
     const [files, setFiles] = useState([])
@@ -30,10 +29,7 @@ const FilesView = () => {
     }, [])
     
     useEffect(() => {
-        console.log("favorites\n", favorites)
-        console.log("files\n", files)
         favoriteFiles = files.filter((elem) => favorites.includes(elem.id))
-        console.log("favoriteFiles\n", favoriteFiles)
     }, [favorites])
 
     const homeFiles_titles = () => {
@@ -58,17 +54,14 @@ const FilesView = () => {
 
     }
 
-    const favoriteFiles_row = () => {
-        return favoriteFiles.slice(0, 5).map(({ id, item }) => (
-            <FileCard name={item.caption} /> ))
-    }
-
     return (
         <div className='fileView'>
-            <div className='fileView_row'>
-                { page === "home" && homeFiles_row() }
-                { page === "favorite" && favoriteFiles_row() }
-            </div>
+            { page === "home" && 
+                <div className='fileView_row'>
+                    homeFiles_row()
+                </div>
+            }
+            
             <div className='filesView_titles'>
 
                 <div className='filesView_titles--left'>

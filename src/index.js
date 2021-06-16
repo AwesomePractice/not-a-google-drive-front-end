@@ -6,6 +6,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import token from "./config"
+
 
 const initialPage = "home";
 const pageReducer = (page = initialPage, action) => {
@@ -17,24 +19,30 @@ const pageReducer = (page = initialPage, action) => {
   }
 };
 
-const initialFavorites = []; //fetch from db
-const favoritesReducer = (favorites = initialFavorites, action) => {
+const initialFiles = fetch('http://34.105.195.56/User/FilesInfo', { 
+  method: 'GET', 
+  headers: new Headers({
+    'Authorization': token, 
+  })
+});
+
+const filesReducer = (files = initialFiles, action) => {
   switch (action.type) {
     case "favorites/addFavorite":
       // post 
-      return [...favorites, action.payload]
+      return [...files, action.payload]
     case "favorites/deleteFavorite":
       // post
-      return favorites.filter((el) => el !== action.payload)
+      return files.filter((el) => el !== action.payload)
     default:
-      return favorites;
+      return files;
   }
 };
 
 const store = createStore(
   combineReducers({
     page: pageReducer,
-    favorites: favoritesReducer
+    files: filesReducer
   })
 );
 
