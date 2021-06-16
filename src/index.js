@@ -11,16 +11,30 @@ const initialPage = "home";
 const pageReducer = (page = initialPage, action) => {
   switch (action.type) {
     case "page/setPage":
-      console.log(action.payload)
       return action.payload ? action.payload : page
     default:
       return page;
   }
 };
 
+const initialFavorites = []; //fetch from db
+const favoritesReducer = (favorites = initialFavorites, action) => {
+  switch (action.type) {
+    case "favorites/addFavorite":
+      // post 
+      return [...favorites, action.payload]
+    case "favorites/deleteFavorite":
+      // post
+      return favorites.filter((el) => el !== action.payload)
+    default:
+      return favorites;
+  }
+};
+
 const store = createStore(
   combineReducers({
     page: pageReducer,
+    favorites: favoritesReducer
   })
 );
 
