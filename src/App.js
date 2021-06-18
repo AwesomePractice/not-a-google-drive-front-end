@@ -2,7 +2,6 @@ import './App.css';
 import Header from "./components/header"
 import Sidebar from "./components/sidebar"
 import FilesView from "./components/filesView/FilesView"
-import SideIcons from "./components/sideIcons"
 
 import NotGoogleDriveLogo from './media/logo.png'
 
@@ -25,7 +24,6 @@ function App() {
     if (!user) {
       auth.signInWithPopup(provider).then((result) => {
         setUser(result.user)
-        console.log(result.user)
       }).catch((error) => {
         alert(error.message);
       });

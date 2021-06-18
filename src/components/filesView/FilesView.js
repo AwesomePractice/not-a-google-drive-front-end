@@ -1,69 +1,92 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector} from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector} from 'react-redux'
+import { fetchData } from '../../actions/fetchData'
+import { fetchOwner } from '../../actions/fetchOwner'
+
 import '../../styles/FilesView.css'
 import '../../styles/main.css'
-
 import FileItem from './FileItem'
 import FileCard from './FileCard'
 
-import { db } from '../../firebase'
-import { FilterSharp } from '@material-ui/icons'
+const noFiles = (
+    <div className="no-files">
+        <p>No files</p>
+    </div>
+)
 
 const FilesView = () => {
-    const [files, setFiles] = useState([])
 
     
     const page = useSelector((state) => state.page)
+<<<<<<< HEAD
     const favorites = useSelector((state) => state.favorites)
     
     let favoriteFiles = []
     let current = []
 
-    useEffect(() => {
-        db.collection('myFiles').onSnapshot(snapshot => {
-            setFiles(snapshot.docs.map(doc => ({
-                id: doc.id,
-                item: doc.data()
-            })))
-        });
-
-        
-    }, [])
+=======
+    const files = useSelector((state) => state.files.files)
+    const folders = useSelector((state) => state.files.children)
+    const dispatch = useDispatch()
     
+>>>>>>> files_logic_KATE
     useEffect(() => {
-        console.log("favorites\n", favorites)
-        console.log("files\n", files)
-        favoriteFiles = files.filter((elem) => favorites.includes(elem.id))
-        console.log("favoriteFiles\n", favoriteFiles)
-    }, [favorites])
+        Promise.all([
+            dispatch(fetchData()),
+            dispatch(fetchOwner())
+        ])
+    }, [])
+
+    useEffect(() => {
+        console.log(files)
+    }, [files])
 
     const homeFiles_titles = () => {
-        current = favoriteFiles
-        console.log("home ", current.length)
-        return files.map(({ id, item }) => (
-            <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={favorites.includes(id)}/>
-        ))
-
+        if(files && files.length > 0)
+            return files.map(({ id, name, size, favourite }) => (
+                <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={size} isFavorite={favourite} icon={"file"}/>
+            )).concat(
+                folders.map(({ id, name }) => (
+                    <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={"-"} isFavorite={false} icon={"folder"}/>
+                )
+            ))
+        else return noFiles
     }
 
     const homeFiles_row = () => {
-        return files.slice(0, 5).map(({ id, item }) => (
-            <FileCard name={item.caption} /> ))
+        if(files)
+            return files.map(({ name }) => (
+                <FileCard name={name} /> ))
     }
 
     const favoriteFiles_titles = () => {
-        console.log("favorite ", favoriteFiles.length)
-        return favoriteFiles.map(({ id, item }) => (
-            <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
-        ))
+        if(files){
+            const favoriteFiles = files.filter((item) => item.favourite === true)
+            if(favoriteFiles.length > 0)
+                return favoriteFiles.map(({ id, item }) => (
+                    <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
+                ))
+            else return noFiles
+        } else return noFiles
 
-    }
-
+<<<<<<< HEAD
     return (
         <div className='fileView'>
             <div className='fileView_row'>
                 { page === "home" && homeFiles_row() }
             </div>
+=======
+    }
+
+    return (
+        <div className='fileView'>
+            { page === "home" && 
+                <div className='fileView_row'>
+                    { homeFiles_row() }
+                </div>
+            }
+            
+>>>>>>> files_logic_KATE
             <div className='filesView_titles'>
 
                 <div className='filesView_titles--left'>

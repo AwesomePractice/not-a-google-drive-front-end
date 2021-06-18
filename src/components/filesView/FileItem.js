@@ -5,15 +5,23 @@ import { useDispatch } from 'react-redux';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import StarIcon from '@material-ui/icons/Star';
+import FolderIcon from '@material-ui/icons/Folder';
 
 import { db } from '../../firebase'
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite }) => {
-    const fileDate = `${timestamp?.toDate().getDate()} ${monthNames[timestamp?.toDate().getMonth() + 1]} ${timestamp?.toDate().getFullYear()}`
+const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon }) => {
+    const date = new Date(timestamp)
+    console.log(date.getDay())
+    const fileDate = `${date.getDate()} ${monthNames[date.getMonth() + 1]} ${date.getFullYear()}`
+    console.log(timestamp)
+    console.log(typeof(timestamp))
 
     const getReadableFileSizeString = (fileSizeInBytes) => {
+        if(fileSizeInBytes === "-")
+            return "-"
+
         let i = -1;
         const byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
         do {
@@ -36,7 +44,8 @@ const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite }) => {
         <div className='fileItem'>
                 <div className="fileItem--left">
                     <a href={fileUrl} className="fileItem__link" title="Download file" download>
-                        <InsertDriveFileIcon />
+                        { icon === "file" &&  <InsertDriveFileIcon /> }
+                        { icon === "folder" && <FolderIcon />}
                     </a>
                     <button className="fileItem_star" onClick={handleClick}>
                         { isFavorite ? <StarIcon /> : <StarOutlineIcon /> }
