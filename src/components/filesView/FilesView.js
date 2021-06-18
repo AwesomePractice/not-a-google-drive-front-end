@@ -8,7 +8,6 @@ import '../../styles/main.css'
 import FileItem from './FileItem'
 import FileCard from './FileCard'
 import Path from './Path'
-import Folder from '@material-ui/icons/Folder'
 
 const noFiles = (
     <div className="no-files">
@@ -38,7 +37,7 @@ const FilesView = () => {
     const folders = useSelector((state) => state.files.children)
     const dispatch = useDispatch()
 
-    const [route, setRoute] = useState([page])
+    const [route, setRoute] = useState([{ name: page, id: "" }])
     const [root, setRoot] = useState(initialRoot)
     
     useEffect(() => {
@@ -54,19 +53,18 @@ const FilesView = () => {
     }, [root])
 
     useEffect(() => {
-        setRoute([page])
+        setRoute([{ name: page, id: "" }])
         setRoot(initialRoot)
     }, [page, initialRoot])
 
     const handleChange = (folderId) => {
         if(folderId === ""){
-            setRoute(page)
+            setRoute([{name: page, id: ""}])
             setRoot(initialRoot)
         } else{
             const folder = searchTree(root, folderId)
             setRoot(folder)
-
-            setRoute(route.push(folder.name))
+            setRoute([...route, {name: folder.name, id: folder.id }])
         }
     }
 
@@ -111,7 +109,7 @@ const FilesView = () => {
 
     return (
         <div className='fileView'>
-            <Path path={route} />
+            <Path path={route} handleChange={handleChange}/>
             { page === "home" && 
                 <div className='fileView_row'>
                     { homeFiles_row() }
