@@ -15,7 +15,7 @@ const index = () => {
             <div className="sidebar_itemsContainer">
                 <SidebarItem icon={(<HomeIcon />)} label={'Home page'} pageName="home" />
                 <SidebarItem icon={(<PeopleAltIcon />)} label={'Shared with me'} pageName="shared"/>
-                <SidebarItem icon={(<StarBorderIcon />)} label={'Favorites'} pageName="favorite" />
+                <SidebarItem icon={(<StarBorderIcon />)} label={'Favorites'} pageName="favorites" />
                 <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Deleted'} pageName="deleted"/>
             </div>
             <NewFile/>       

@@ -7,16 +7,14 @@ import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import StarIcon from '@material-ui/icons/Star';
 import FolderIcon from '@material-ui/icons/Folder';
 
-import { db } from '../../firebase'
+import { manageFavorite } from '../../actions/manageFavorite';
+
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon }) => {
+const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon, handleChange }) => {
     const date = new Date(timestamp)
-    console.log(date.getDay())
     const fileDate = `${date.getDate()} ${monthNames[date.getMonth() + 1]} ${date.getFullYear()}`
-    console.log(timestamp)
-    console.log(typeof(timestamp))
 
     const getReadableFileSizeString = (fileSizeInBytes) => {
         if(fileSizeInBytes === "-")
@@ -34,25 +32,54 @@ const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon }) =
 
     const dispatch = useDispatch();
 
-    const handleClick = (e) => {
+    const handleClickFavorite = (e) => {
         e.preventDefault();
-        const t = isFavorite ? "favorites/deleteFavorite" : "favorites/addFavorite"
-        dispatch({type: t, payload: id})
+
+        Promise.all([
+            dispatch(manageFavorite())
+        ])
+    }
+
+    const handleClickFolder = (e) => {
+        e.preventDefault();
+
+        handleChange(id)
     }
 
     return (
         <div className='fileItem'>
                 <div className="fileItem--left">
-                    <a href={fileUrl} className="fileItem__link" title="Download file" download>
-                        { icon === "file" &&  <InsertDriveFileIcon /> }
-                        { icon === "folder" && <FolderIcon />}
-                    </a>
-                    <button className="fileItem_star" onClick={handleClick}>
+                    { 
+                        icon === "file" &&  
+                        <a href={fileUrl} className="fileItem__link" title="Download file" download>
+                            <InsertDriveFileIcon />
+                        </a> 
+                    }
+
+                    { 
+                        icon === "folder" && 
+                        <button href={fileUrl} className="fileItem__button" onClick={handleClickFolder}>
+                            <FolderIcon />
+                        </button>
+                    }
+    
+                    <button className="fileItem_star" onClick={handleClickFavorite}>
                         { isFavorite ? <StarIcon /> : <StarOutlineIcon /> }
                     </button>
-                    <a href={fileUrl} className="fileItem__link" title="Download file" download>
-                        <p>{caption}</p>
-                    </a>
+
+                    { 
+                        icon === "file" &&
+                        <a href={fileUrl} className="fileItem__link" title="Download file" download>
+                            <p>{caption}</p>
+                        </a>
+                    }
+
+                    { 
+                        icon === "folder" &&
+                        <button href={fileUrl} className="fileItem__button" onClick={handleClickFolder}>
+                            <p>{caption}</p>
+                        </button>
+                    }
                 </div>
                 <div className="fileItem--right">
                     <p>{fileDate}</p>
