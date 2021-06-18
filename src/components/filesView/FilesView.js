@@ -18,18 +18,10 @@ const FilesView = () => {
 
     
     const page = useSelector((state) => state.page)
-<<<<<<< HEAD
-    const favorites = useSelector((state) => state.favorites)
-    
-    let favoriteFiles = []
-    let current = []
-
-=======
     const files = useSelector((state) => state.files.files)
     const folders = useSelector((state) => state.files.children)
     const dispatch = useDispatch()
     
->>>>>>> files_logic_KATE
     useEffect(() => {
         Promise.all([
             dispatch(fetchData()),
@@ -69,13 +61,6 @@ const FilesView = () => {
             else return noFiles
         } else return noFiles
 
-<<<<<<< HEAD
-    return (
-        <div className='fileView'>
-            <div className='fileView_row'>
-                { page === "home" && homeFiles_row() }
-            </div>
-=======
     }
 
     return (
@@ -86,7 +71,6 @@ const FilesView = () => {
                 </div>
             }
             
->>>>>>> files_logic_KATE
             <div className='filesView_titles'>
 
                 <div className='filesView_titles--left'>
