@@ -19,7 +19,7 @@ export const fetchOwner = () => (dispatch) => {
     })
       .then((res) => res.json())
       .then((data) => {
-          console.log("owner", data[0].owner_id);
+          // console.log("owner", data[0].owner_id);
           return dispatch({ type: OWNER_LOAD_OWNER_SUCCESS, payload: data[0].owner_id });
       })
       .catch((err) => dispatch({ type: OWNER_LOAD_OWNER_FAIL, payload: err }));

@@ -1,6 +1,9 @@
 export const FILES_FETCH_DATA = "files/fetchData"
 export const FILES_LOAD_DATA_SUCCESS = "files/loadDataSuccess"
 export const FILES_LOAD_DATA_FAIL = "files/loadDataFial"
+export const FILES_MANAGE_FAVORITE = "files/manageFavorite"
+export const FILES_MANAGE_FAVORITE_SUCCESS = "files/manageFavoriteSuccess"
+export const FILES_MANAGE_FAVORITE_FAIL = "files/manageFavoriteFail"
 
 export const OWNER_FETCH_OWNER = "owner/fetchOwner"
 export const OWNER_LOAD_OWNER_SUCCESS = "owner/loadOwnerSuccess"

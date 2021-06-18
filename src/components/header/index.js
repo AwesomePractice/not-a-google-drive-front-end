@@ -4,9 +4,9 @@ import '../../styles/Header.css'
 import NotGoogleDriveLogo from '../../media/logo.png'
 
 import SearchIcon from '@material-ui/icons/Search';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import SettingsIcon from '@material-ui/icons/Settings';
-import AppsIcon from '@material-ui/icons/Apps';
+// import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+// import SettingsIcon from '@material-ui/icons/Settings';
+// import AppsIcon from '@material-ui/icons/Apps';
 
 const index = ({ userPhoto }) => {
     return (
@@ -22,11 +22,11 @@ const index = ({ userPhoto }) => {
                 </div>
             </div>
             <div className="header_icons">
-                <span>
+                {/* <span>
                     <HelpOutlineIcon />
                     <SettingsIcon />
                     <AppsIcon/>
-                </span>
+                </span> */}
                 <img src={userPhoto} alt="User Avatar"/>
             </div>
         </div>
