@@ -8,7 +8,7 @@ const Path = ({path, handleChange}) => {
             <p className="path">
                 {
                     path.map((item) => {
-                        return <PathItem item={item} handleChange={handleChange} />
+                        return <PathItem item={item} handleChange={handleChange} key={item.name}/>
                     })
                 }
             </p>

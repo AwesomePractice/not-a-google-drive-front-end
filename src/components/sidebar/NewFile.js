@@ -1,13 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/NewFile.css'
+import token from '../../config'
 
 import AddIcon from '@material-ui/icons/Add';
-
-import firebase from 'firebase'
-import { storage, db } from '../../firebase';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import { fetchData } from '../../actions/fetchData';
 
 function getModalStyle() {
     return {
@@ -35,6 +34,8 @@ const NewFile = () => {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState(null)
     const [uploading, setUploading] = useState(false)
+    const dispatch = useDispatch()
+    const folder = useSelector((state) => state.rootFolder)
 
     const handleOpen = () => {
         setOpen(true);
@@ -53,29 +54,31 @@ const NewFile = () => {
     const handleUpload = () => {
         setUploading(true)
 
-        storage.ref(`files/${file.name}`).put(file).then(snapshot => {
-            console.log(snapshot)
+        let body = new FormData();
+        console.log(file)
+        body.append('fileUpload', file);
 
-            storage.ref('files').child(file.name).getDownloadURL().then(url => {
-                //post image inside the db
-
-                db.collection('myFiles').add({
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    caption: file.name,
-                    fileUrl: url,
-                    size: snapshot._delegate.bytesTransferred,
-                })
-
-                setUploading(false)
-                setOpen(false)
-                setFile(null)
+        fetch(`http://34.105.195.56/FileUploader/UploadFile?compressed=false&encrypted=false&favourite=false&folderId=${folder.id}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            },
+            body: body
+        }).then((response) => {
+            response.json()
+            .then((data) => {
+                console.log(data)
             })
 
-            storage.ref('files').child(file.name).getMetadata().then(meta => {
-                console.log(meta.size)
-            })
+            setUploading(false)
+            setOpen(false)
+            setFile(null)
 
+            dispatch(fetchData())
         })
+
+
+
     }
 
     return (

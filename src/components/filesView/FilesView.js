@@ -38,7 +38,7 @@ const FilesView = () => {
     const dispatch = useDispatch()
 
     const [route, setRoute] = useState([{ name: page, id: "" }])
-    const [root, setRoot] = useState(initialRoot)
+    const root = useSelector((state) => state.rootFolder)
     
     useEffect(() => {
         Promise.all([
@@ -46,7 +46,7 @@ const FilesView = () => {
             dispatch(fetchOwner()),
         ])
 
-        setRoot(initialRoot)
+        dispatch({type: "rootFolder/setRoot", payload: initialRoot})
     }, [])
 
     useEffect(() => {
@@ -54,16 +54,21 @@ const FilesView = () => {
 
     useEffect(() => {
         setRoute([{ name: page, id: "" }])
-        setRoot(initialRoot)
-    }, [page, initialRoot])
+        dispatch({type: "rootFolder/setRoot", payload: initialRoot})
+    }, [page])
+
+    useEffect(()=>{
+        const folder = searchTree(initialRoot, root.id)
+        dispatch({type: "rootFolder/setRoot", payload: folder})
+    },[initialRoot])
 
     const handleChange = (folderId) => {
         if(folderId === ""){
             setRoute([{name: page, id: ""}])
-            setRoot(initialRoot)
+            dispatch({type: "rootFolder/setRoot", payload: initialRoot})
         } else{
             const folder = searchTree(root, folderId)
-            setRoot(folder)
+            dispatch({type: "rootFolder/setRoot", payload: folder})
             setRoute([...route, {name: folder.name, id: folder.id }])
         }
     }
@@ -72,11 +77,11 @@ const FilesView = () => {
         const currentFiles = root.files
         const currentFolders = root.children
         if(currentFiles && currentFiles.length > 0)
-            return files.map(({ id, name, size, favourite }) => (
-                <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={size} isFavorite={favourite} icon={"file"}/>
+            return currentFiles.map(({ id, name, size, favourite }) => (
+                <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={size} isFavorite={favourite} icon={"file"}  key={id}/>
             )).concat(
                 currentFolders.map(({ id, name }) => (
-                    <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={"-"} isFavorite={false} icon={"folder"} handleChange={handleChange}/>
+                    <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={"-"} isFavorite={false} icon={"folder"} handleChange={handleChange} key={id}/>
                 )
             ))
         else return noFiles
@@ -85,8 +90,8 @@ const FilesView = () => {
     const homeFiles_row = () => {
         const currentFiles = root.files
         if(currentFiles)
-            return currentFiles.map(({ name }) => (
-                <FileCard name={name} /> ))
+            return currentFiles.slice(0,4).map(({ name, id }) => (
+                <FileCard name={name} key={id} /> ))
     }
 
     const favoriteFiles_titles = () => {
@@ -96,10 +101,10 @@ const FilesView = () => {
             const favoriteFiles = currentFiles.filter((item) => item.favourite === true)
             if(favoriteFiles.length > 0)
                 return favoriteFiles.map(({ id, item }) => (
-                    <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
+                    <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true} key={id} />
                 )).concat(
                     currentFolders.map(({ id, name }) => (
-                        <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={"-"} isFavorite={false} icon={"folder"} handleChange={handleChange}/>
+                        <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={"-"} isFavorite={false} icon={"folder"} handleChange={handleChange} key={id} />
                     )
                 ))
             else return noFiles
