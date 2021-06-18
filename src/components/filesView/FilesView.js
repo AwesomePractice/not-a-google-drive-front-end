@@ -1,57 +1,64 @@
 import React, { useEffect } from 'react'
-import { useSelector} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
+import { fetchData } from '../../actions/fetchData'
+import { fetchOwner } from '../../actions/fetchOwner'
+
 import '../../styles/FilesView.css'
 import '../../styles/main.css'
-
 import FileItem from './FileItem'
 import FileCard from './FileCard'
 
-import { db } from '../../firebase'
+const noFiles = (
+    <div className="no-files">
+        <p>No files</p>
+    </div>
+)
 
 const FilesView = () => {
 
     const page = useSelector((state) => state.page)
-    const files = useSelector((state) => state.files)
-
-    console.log(files)
-
-    let favoriteFiles = []
-    let current = []
+    const files = useSelector((state) => state.files.files)
+    const folders = useSelector((state) => state.files.children)
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        Promise.all([
+            dispatch(fetchData()),
+            dispatch(fetchOwner())
+        ])
+    }, [])
 
     useEffect(() => {
-        // db.collection('myFiles').onSnapshot(snapshot => {
-        //     setFiles(snapshot.docs.map(doc => ({
-        //         id: doc.id,
-        //         item: doc.data()
-        //     })))
-        // });
-
-        
-    }, [])
-    
-    // useEffect(() => {
-    //     favoriteFiles = files.filter((elem) => favorites.includes(elem.id))
-    // }, [files])
+        console.log(files)
+    }, [files])
 
     const homeFiles_titles = () => {
-        // current = favoriteFiles
-        // console.log("home ", current.length)
-        // return files.map(({ id, item }) => (
-        //     <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={item.isFavorite}/>
-        // ))
-
+        if(files && files.length > 0)
+            return files.map(({ id, name, size, favourite }) => (
+                <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={size} isFavorite={favourite} icon={"file"}/>
+            )).concat(
+                folders.map(({ id, name }) => (
+                    <FileItem id={id} caption={name} timestamp={Date.now()} fileUrl={"#"} size={"-"} isFavorite={false} icon={"folder"}/>
+                )
+            ))
+        else return noFiles
     }
 
     const homeFiles_row = () => {
-        // return files.slice(0, 5).map(({ id, item }) => (
-        //     <FileCard name={item.caption} /> ))
+        if(files)
+            return files.map(({ name }) => (
+                <FileCard name={name} /> ))
     }
 
     const favoriteFiles_titles = () => {
-        // console.log("favorite ", favoriteFiles.length)
-        // return favoriteFiles.map(({ id, item }) => (
-        //     <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
-        // ))
+        if(files){
+            const favoriteFiles = files.filter((item) => item.favourite === true)
+            if(favoriteFiles.length > 0)
+                return favoriteFiles.map(({ id, item }) => (
+                    <FileItem id={id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} isFavorite={true}/>
+                ))
+            else return noFiles
+        } else return noFiles
 
     }
 
@@ -59,7 +66,7 @@ const FilesView = () => {
         <div className='fileView'>
             { page === "home" && 
                 <div className='fileView_row'>
-                    { homeFiles_row()}
+                    { homeFiles_row() }
                 </div>
             }
             

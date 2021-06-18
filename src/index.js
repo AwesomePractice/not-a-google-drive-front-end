@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from "redux"
+import { createStore, compose, applyMiddleware } from "redux"
 import { Provider } from "react-redux"
+import thunk from "redux-thunk"
+
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import rootReducer from './rootReducer'
 
-import pageReducer from './reducers/pageReducer'
-import ownerReducer from './reducers/ownerReducer'
-import filesReducer from './reducers/filesReducer'
-
-
-const store = createStore(
-  combineReducers({
-    page: pageReducer,
-    files: filesReducer,
-    owner: ownerReducer
-  })
-);
+const store = compose(
+  applyMiddleware(thunk)
+)(createStore)(rootReducer)
 
 ReactDOM.render(
   <React.StrictMode>

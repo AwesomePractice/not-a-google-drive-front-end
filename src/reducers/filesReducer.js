@@ -1,19 +1,9 @@
-import token from "../config"
+import {
+    FILES_LOAD_DATA_SUCCESS
+  } from "../actions/actionTypes"
 
-let initialFiles = []
-const filesReducer = async (files = initialFiles, action) => {
-  await fetch('http://34.105.195.56/User/FilesInfo', { 
-    method: 'GET', 
-    headers: {
-      'Authorization': `Bearer ${token}` 
-    }
-  }).then((response) => {
-    if (response.ok)
-      response.json().then((data => {
-        initialFiles = data[0]
-      }))
-    })
-    
+const initialFiles = []
+const filesReducer = (files = initialFiles, action) => {
   switch (action.type) {
     case "files/addFavorite":
       // post 
@@ -21,6 +11,9 @@ const filesReducer = async (files = initialFiles, action) => {
     case "files/deleteFavorite":
       // post
       return files
+    case FILES_LOAD_DATA_SUCCESS:
+      console.log("files", files)
+      return action.payload
     default:
       return files;
   }
