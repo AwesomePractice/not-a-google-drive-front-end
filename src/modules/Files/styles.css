@@ -5,8 +5,11 @@
 
 .fileView_row{
     height: 250px;
-    display: flex;
-    align-items: flex-start;
+    display: inline-grid;
+    justify-items: start;
+    align-items: center;
+    grid-template: "fileCard fileCard fileCard fileCard";
+    grid-gap: 5px;
 }
 
 .filesView__titles{

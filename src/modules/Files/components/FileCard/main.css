@@ -1,9 +1,9 @@
 .fileCard {
     height: 190px;
-    width: 240px;
+    width: 200px;
     border-radius: 10px;
     border: 1px solid rgb(219, 219, 219);
-    margin: 5px;
+    margin: 0;
 
     cursor: pointer;
 }

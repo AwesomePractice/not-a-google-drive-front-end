@@ -12,7 +12,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 import { manageFavorite } from "../../actions/manageFavorite";
-// import { deleteItem } from "../../actions/deleteItem";
+import { deleteItem } from "../../actions/deleteItem";
 
 import token from "../../../../config";
 

@@ -37,6 +37,7 @@ const Files = () => {
   const page = useSelector((state) => state.page);
   const initialRoot = useSelector((state) => state.files);
   const root = useSelector((state) => state.rootFolder);
+  const sharedFiles = useSelector((state) => state.sharedFiles);
   const dispatch = useDispatch();
 
   const [route, setRoute] = useState([{ name: page, id: "" }]);
@@ -48,7 +49,7 @@ const Files = () => {
     dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
   }, []);
 
-  useEffect(() => {}, [root]);
+  useEffect(() => {}, [root, sharedFiles]);
 
   useEffect(() => {
     if (page[0] === "-")
@@ -132,14 +133,14 @@ const Files = () => {
       if (currentFiles)
         return currentFiles
           .slice(0, 4)
-          .map(({ name, id }) => <FileCard name={name} key={id} />);
+          .map(({ name, id }) => <FileCard name={name} key={id} id={id} />);
     }
 
     return null;
   };
 
   const favoriteFiles_titles = () => {
-    if (initialRoot) {
+    if (root) {
       const favoriteFiles = initialRoot.files.filter(
         (item) => item.favourite === true
       );
@@ -160,6 +161,24 @@ const Files = () => {
     return noFiles;
   };
 
+  const sharedFiles_titles = () => {
+    console.log(sharedFiles);
+    if (root && sharedFiles?.length > 0) {
+      return sharedFiles.map(({ id, name, size }) => (
+        <FileItem
+          id={id}
+          caption={name}
+          timestamp={Date.now()}
+          size={size}
+          isFavorite
+          icon="file"
+          key={id}
+        />
+      ));
+    }
+    return noFiles;
+  };
+
   return (
     <div className="fileView">
       <Path path={route} handleChange={handleChange} />
@@ -174,6 +193,7 @@ const Files = () => {
       </div>
       {page === "home" && homeFiles_titles()}
       {page === "favorites" && favoriteFiles_titles()}
+      {page === "shared" && sharedFiles_titles()}
     </div>
   );
 };
