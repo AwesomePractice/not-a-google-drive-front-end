@@ -1,7 +1,7 @@
 import {
   OWNER_LOAD_OWNER_INFO_SUCCESS,
   OWNER_LOAD_OWNER_SUCCESS,
-} from "../actions/actionTypes";
+} from "../modules/Header/actions/actionTypes";
 
 const initialOwner = {
   id: "",
