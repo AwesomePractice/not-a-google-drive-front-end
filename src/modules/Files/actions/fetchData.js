@@ -6,7 +6,7 @@ import {
   FILES_LOAD_DATA_SUCCESS,
 } from "./actionTypes";
 
-import token from "../config";
+import token from "../../../config";
 
 export const fetchData = () => (dispatch) => {
   dispatch({ type: FILES_FETCH_DATA });
@@ -20,11 +20,12 @@ export const fetchData = () => (dispatch) => {
     },
   })
     .then((res) => res.json())
-    .then((data) =>
-      dispatch({
+    .then((data) => {
+      console.log("data", data[0].root_folder);
+      return dispatch({
         type: FILES_LOAD_DATA_SUCCESS,
         payload: data[0].root_folder,
-      })
-    )
+      });
+    })
     .catch((err) => dispatch({ type: FILES_LOAD_DATA_FAIL, payload: err }));
 };
