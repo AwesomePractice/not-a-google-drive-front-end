@@ -4,7 +4,7 @@ import {
   FILES_FETCH_DATA,
   FILES_LOAD_DATA_FAIL,
   FILES_LOAD_DATA_SUCCESS,
-} from "../modules/Files/actions/actionTypes";
+} from "./actionTypes";
 
 import token from "../config";
 
