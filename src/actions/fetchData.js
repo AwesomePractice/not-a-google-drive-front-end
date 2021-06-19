@@ -21,20 +21,15 @@ export const fetchData = () => (dispatch) => {
     },
   })
     .then((res) => res.json())
-<<<<<<< HEAD
     .then((data) => {
       dispatch({
         type: SHARED_FILES_LOAD_DATA_SUCCESS,
         payload: data[0].available_files,
       });
       return dispatch({
-=======
-    .then((data) =>
-      dispatch({
->>>>>>> files_logic_KATE
         type: FILES_LOAD_DATA_SUCCESS,
         payload: data[0].root_folder,
-      })
-    )
+      });
+    })
     .catch((err) => dispatch({ type: FILES_LOAD_DATA_FAIL, payload: err }));
 };
