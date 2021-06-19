@@ -1,14 +1,20 @@
 import React from 'react'
 import '../../styles/Header.css'
+import { useSelector } from 'react-redux';
 
 import NotGoogleDriveLogo from '../../media/logo.png'
 
 import SearchIcon from '@material-ui/icons/Search';
-// import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-// import SettingsIcon from '@material-ui/icons/Settings';
-// import AppsIcon from '@material-ui/icons/Apps';
+import PersonIcon from '@material-ui/icons/Person';
 
-const index = ({ userPhoto }) => {
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  
+
+const Header = () => {
+    const owner = useSelector((state) => state.owner)
+
     return (
         <div className='header container'>
             <div className="header_logo">
@@ -22,15 +28,11 @@ const index = ({ userPhoto }) => {
                 </div>
             </div>
             <div className="header_icons">
-                {/* <span>
-                    <HelpOutlineIcon />
-                    <SettingsIcon />
-                    <AppsIcon/>
-                </span> */}
-                <img src={userPhoto} alt="User Avatar"/>
+                <PersonIcon />
+                { owner ? "Hello, " + capitalizeFirstLetter(owner.name) + " " + capitalizeFirstLetter(owner.surname) : "Hello!"}
             </div>
         </div>
     )
 }
 
-export default index
+export default Header

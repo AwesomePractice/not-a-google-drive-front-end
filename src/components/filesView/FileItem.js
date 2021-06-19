@@ -6,13 +6,17 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import StarIcon from '@material-ui/icons/Star';
 import FolderIcon from '@material-ui/icons/Folder';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 import { manageFavorite } from '../../actions/manageFavorite';
+import { deleteFile } from '../../actions/deleteFile';
+
+import token from "../../config"
 
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon, handleChange }) => {
+const FileItem = ({ id, caption, timestamp, size, isFavorite, icon, handleChange }) => {
     const date = new Date(timestamp)
     const fileDate = `${date.getDate()} ${monthNames[date.getMonth() + 1]} ${date.getFullYear()}`
 
@@ -36,7 +40,7 @@ const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon, han
         e.preventDefault();
 
         Promise.all([
-            dispatch(manageFavorite())
+            dispatch(manageFavorite(id, !isFavorite))
         ])
     }
 
@@ -46,45 +50,72 @@ const FileItem = ({ id, caption, timestamp, fileUrl, size, isFavorite, icon, han
         handleChange(id)
     }
 
+    const handleClickDelete = (e) => {
+        e.preventDefault();
+
+        Promise.all([
+            dispatch(deleteFile(id))
+        ])
+    }
+
+    const handleClickDownload = (e) => {
+        e.preventDefault();
+
+        fetch(`http://34.105.195.56/FileUploader/DownloadFile?fileId=${id}`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        }).then((response) => {
+            if(response.ok)
+                response.blob().then((data) => {
+                    console.log(data)
+                    let file = window.URL.createObjectURL(data);
+                    window.location.assign(file);
+                })
+
+        })
+    }
+
     return (
         <div className='fileItem'>
-                <div className="fileItem--left">
                     { 
                         icon === "file" &&  
-                        <a href={fileUrl} className="fileItem__link" title="Download file" download>
+                        <button className="fileItem__icon" title="Download file" onClick={handleClickDownload}>
                             <InsertDriveFileIcon />
-                        </a> 
+                        </button> 
                     }
 
                     { 
                         icon === "folder" && 
-                        <button href={fileUrl} className="fileItem__button" onClick={handleClickFolder}>
+                        <button href="#" className="fileItem__icon" onClick={handleClickFolder}>
                             <FolderIcon />
                         </button>
                     }
     
-                    <button className="fileItem_star" onClick={handleClickFavorite}>
-                        { isFavorite ? <StarIcon /> : <StarOutlineIcon /> }
+                    <button className="fileItem__star" onClick={handleClickFavorite}>
+                        { isFavorite ? <StarIcon className="fileItem__star--active" /> : <StarOutlineIcon className="fileItem__star--disactive" /> }
                     </button>
 
                     { 
                         icon === "file" &&
-                        <a href={fileUrl} className="fileItem__link" title="Download file" download>
+                        <button className="fileItem__name" title="Download file" onClick={handleClickDownload}>
                             <p>{caption}</p>
-                        </a>
+                        </button>
                     }
 
                     { 
                         icon === "folder" &&
-                        <button href={fileUrl} className="fileItem__button" onClick={handleClickFolder}>
+                        <button href="#" className="fileItem__name" onClick={handleClickFolder}>
                             <p>{caption}</p>
                         </button>
                     }
-                </div>
-                <div className="fileItem--right">
-                    <p>{fileDate}</p>
-                    <p>{getReadableFileSizeString(size)}</p>
-                </div>
+                    <p className="fileItem__date">{fileDate}</p>
+                    <p className="fileItem__size">{getReadableFileSizeString(size)}</p>
+
+                    <button className="fileItem__delete fileItem__button" onClick={handleClickDelete}>
+                        <CancelIcon />
+                    </button>
             
         </div>
     )

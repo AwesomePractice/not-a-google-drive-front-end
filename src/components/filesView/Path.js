@@ -1,7 +1,6 @@
 import "../../styles/Path.css"
 
 const Path = ({path, handleChange}) => {
-    console.log(path)
     
     return (
         <div className="path--container">

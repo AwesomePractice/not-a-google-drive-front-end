@@ -87,6 +87,7 @@
 .header_icons .MuiSvgIcon-root {
     font-size: 28px;
     margin: 4px;
+    color: #fff;
 }
 
 .header_icons>span{

@@ -39,11 +39,10 @@ function App() {
       {
         user ? (
           <>
-            <Header userPhoto={user.photoUrl} className/>
+            <Header />
             <div className="app_main container">
               <Sidebar/>
               <FilesView/>
-              {/* <SideIcons/> */}
             </div>
           </>
         ) : (
