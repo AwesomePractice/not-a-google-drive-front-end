@@ -33,10 +33,11 @@ const FilesView = () => {
 
     const page = useSelector((state) => state.page)
     const initialRoot = useSelector((state) => state.files)
+    const root = useSelector((state) => state.rootFolder)
     const dispatch = useDispatch()
 
     const [route, setRoute] = useState([{ name: page, id: "" }])
-    const root = useSelector((state) => state.rootFolder)
+    const [favorites, setFavorites] = useState([])
     
     useEffect(() => {
         Promise.all([
@@ -45,6 +46,7 @@ const FilesView = () => {
         ])
 
         dispatch({type: "rootFolder/setRoot", payload: initialRoot})
+
     }, [])
 
     useEffect(() => {
@@ -85,12 +87,15 @@ const FilesView = () => {
             const folder = searchTree(initialRoot, root.id)
             const currentFiles = folder?.files
             const currentFolders = folder?.children
-            if(currentFiles && currentFolders)
+            
+            if(currentFiles?.length === 0 && currentFolders?.length === 0)
+                return noFiles
+
             return currentFiles?.map(({ id, name, size, favourite }) => (
                 <FileItem id={id} caption={name} timestamp={Date.now()} size={size} isFavorite={favourite} icon={"file"}  key={id}/>
             )).concat(
-                currentFolders?.map(({ id, name }) => (
-                    <FileItem id={id} caption={name} timestamp={Date.now()} size={"-"} isFavorite={false} icon={"folder"} handleChange={handleChange} key={id}/>
+                currentFolders?.map(({ id, name, favourite }) => (
+                    <FileItem id={id} caption={name} timestamp={Date.now()} size={"-"} isFavorite={favourite} icon={"folder"} handleChange={handleChange} key={id}/>
                 )
             ))
         }
@@ -111,8 +116,8 @@ const FilesView = () => {
         if(initialRoot){
             const favoriteFiles = initialRoot.files.filter((item) => item.favourite === true)
             if(favoriteFiles.length > 0)
-                return favoriteFiles.map(({ id, name, size, favourite }) => (
-                    <FileItem id={id} caption={name} timestamp={Date.now()} size={size} isFavorite={favourite} icon={"file"}  key={id}/>
+                return favoriteFiles.map(({ id, name, size}) => (
+                    <FileItem id={id} caption={name} timestamp={Date.now()} size={size} isFavorite={true} icon={"file"}  key={id}/>
                 ))
             else return noFiles
         } else return noFiles
@@ -122,7 +127,7 @@ const FilesView = () => {
     return (
         <div className='fileView'>
             <Path path={route} handleChange={handleChange}/>
-            { page === "home" && homeFiles_row().length > 0 && 
+            { page === "home" && homeFiles_row()?.length > 0 && 
                 <div className='fileView_row'>
                     { homeFiles_row() }
                 </div>

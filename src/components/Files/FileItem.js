@@ -40,7 +40,7 @@ const FileItem = ({ id, caption, timestamp, size, isFavorite, icon, handleChange
         e.preventDefault();
 
         Promise.all([
-            dispatch(manageFavorite(id, !isFavorite))
+            dispatch(manageFavorite(id, !isFavorite, icon))
         ])
     }
 
@@ -54,7 +54,7 @@ const FileItem = ({ id, caption, timestamp, size, isFavorite, icon, handleChange
         e.preventDefault();
 
         Promise.all([
-            dispatch(deleteFile(id))
+            dispatch(deleteFile(id, icon))
         ])
     }
 

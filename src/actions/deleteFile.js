@@ -3,11 +3,11 @@ import { FILES_DELETE_FILE, FILES_DELETE_FILE_FAIL, FILES_DELETE_FILE_SUCCESS } 
 import token from '../config';
 import { fetchData } from './fetchData';
 
-export const deleteFile = (id) => (dispatch) => {
+export const deleteFile = (id, icon) => (dispatch) => {
     dispatch({ type: FILES_DELETE_FILE });
     
     console.log(id)
-    const url = "http://34.105.195.56/FileUploader/DeleteFile"
+    const url = "http://34.105.195.56" + (icon === "file" ? "/FileUploader/DeleteFile" : "/Folder/DeleteFolder")
   
     fetch(url, { 
         method: 'POST', 

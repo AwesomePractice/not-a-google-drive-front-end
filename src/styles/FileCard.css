@@ -8,6 +8,10 @@
     cursor: pointer;
 }
 
+.fileCard:hover{
+    background-color: #f5f5f5;
+}
+
 .fileCard--top {
     height: 70%;
     border-bottom: 1px solid rgb(219, 219, 219);
