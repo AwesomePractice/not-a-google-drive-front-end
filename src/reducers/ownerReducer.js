@@ -1,26 +1,29 @@
-import { OWNER_LOAD_OWNER_INFO_SUCCESS, OWNER_LOAD_OWNER_SUCCESS } from "../actions/actionTypes";
+import {
+  OWNER_LOAD_OWNER_INFO_SUCCESS,
+  OWNER_LOAD_OWNER_SUCCESS,
+} from "../actions/actionTypes";
 
 const initialOwner = {
   id: "",
   name: "",
-  surname: ""
+  surname: "",
 };
 const ownerReducer = (owner = initialOwner, action) => {
   switch (action.type) {
     case OWNER_LOAD_OWNER_SUCCESS:
       return {
         ...owner,
-        id: action.payload
-      }
+        id: action.payload,
+      };
     case OWNER_LOAD_OWNER_INFO_SUCCESS:
-      return{
+      return {
         ...owner,
         name: action.payload.name,
-        surname: action.payload.surname
-      }
+        surname: action.payload.surname,
+      };
     default:
-      return owner
+      return owner;
   }
 };
 
-export default ownerReducer
+export default ownerReducer;
