@@ -122,7 +122,7 @@ const FilesView = () => {
     return (
         <div className='fileView'>
             <Path path={route} handleChange={handleChange}/>
-            { page === "home" && 
+            { page === "home" && homeFiles_row().length > 0 && 
                 <div className='fileView_row'>
                     { homeFiles_row() }
                 </div>
