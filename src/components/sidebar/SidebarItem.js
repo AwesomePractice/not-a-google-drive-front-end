@@ -10,7 +10,7 @@ const SidebarItem = ({icon, label, pageName}) => {
 
     const handleClick = (e) => {
         e.preventDefault()
-        dispatch({ type: "page/setPage", payload: pageName })
+        dispatch({ type: "page/setPage", payload: "-" + pageName })
     }
 
     return (
