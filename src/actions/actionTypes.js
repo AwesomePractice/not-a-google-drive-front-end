@@ -1,16 +1,3 @@
-export const FILES_FETCH_DATA = "files/fetchData"
-export const FILES_LOAD_DATA_SUCCESS = "files/loadDataSuccess"
-export const FILES_LOAD_DATA_FAIL = "files/loadDataFial"
-export const FILES_MANAGE_FAVORITE = "files/manageFavorite"
-export const FILES_MANAGE_FAVORITE_SUCCESS = "files/manageFavoriteSuccess"
-export const FILES_MANAGE_FAVORITE_FAIL = "files/manageFavoriteFail"
-export const FILES_DELETE_FILE = "files/deleteFile"
-export const FILES_DELETE_FILE_SUCCESS = "files/deleteFileSuccess"
-export const FILES_DELETE_FILE_FAIL = "files/deleteFileFail"
-
-export const OWNER_FETCH_OWNER = "owner/fetchOwner"
-export const OWNER_LOAD_OWNER_SUCCESS = "owner/loadOwnerSuccess"
-export const OWNER_LOAD_OWNER_FAIL = "owner/loadOwnerFail"
-export const OWNER_FETCH_OWNER_INFO = "owner/fetchOwnerInfo"
-export const OWNER_LOAD_OWNER_INFO_SUCCESS = "owner/loadOwnerInfoSuccess"
-export const OWNER_LOAD_OWNER_INFO_FAIL = "owner/loadOwnerInfoFail"
+export const FILES_FETCH_DATA = "files/fetchData";
+export const FILES_LOAD_DATA_SUCCESS = "files/loadDataSuccess";
+export const FILES_LOAD_DATA_FAIL = "files/loadDataFial";
