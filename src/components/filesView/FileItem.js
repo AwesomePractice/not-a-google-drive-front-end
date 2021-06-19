@@ -11,6 +11,8 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { manageFavorite } from '../../actions/manageFavorite';
 import { deleteFile } from '../../actions/deleteFile';
 
+import token from "../../config"
+
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -56,13 +58,32 @@ const FileItem = ({ id, caption, timestamp, size, isFavorite, icon, handleChange
         ])
     }
 
+    const handleClickDownload = (e) => {
+        e.preventDefault();
+
+        fetch(`http://34.105.195.56/FileUploader/DownloadFile?fileId=${id}`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        }).then((response) => {
+            if(response.ok)
+                response.blob().then((data) => {
+                    console.log(data)
+                    let file = window.URL.createObjectURL(data);
+                    window.location.assign(file);
+                })
+
+        })
+    }
+
     return (
         <div className='fileItem'>
                     { 
                         icon === "file" &&  
-                        <a href="#" className="fileItem__icon" title="Download file" download>
+                        <button className="fileItem__icon" title="Download file" onClick={handleClickDownload}>
                             <InsertDriveFileIcon />
-                        </a> 
+                        </button> 
                     }
 
                     { 
@@ -73,14 +94,14 @@ const FileItem = ({ id, caption, timestamp, size, isFavorite, icon, handleChange
                     }
     
                     <button className="fileItem__star" onClick={handleClickFavorite}>
-                        { isFavorite ? <StarIcon /> : <StarOutlineIcon /> }
+                        { isFavorite ? <StarIcon className="fileItem__star--active" /> : <StarOutlineIcon className="fileItem__star--disactive" /> }
                     </button>
 
                     { 
                         icon === "file" &&
-                        <a href="#" className="fileItem__name" title="Download file" download>
+                        <button className="fileItem__name" title="Download file" onClick={handleClickDownload}>
                             <p>{caption}</p>
-                        </a>
+                        </button>
                     }
 
                     { 

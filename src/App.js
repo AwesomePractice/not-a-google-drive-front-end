@@ -43,7 +43,6 @@ function App() {
             <div className="app_main container">
               <Sidebar/>
               <FilesView/>
-              {/* <SideIcons/> */}
             </div>
           </>
         ) : (

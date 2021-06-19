@@ -12,7 +12,7 @@ function capitalizeFirstLetter(string) {
   }
   
 
-const Index = ({ userPhoto }) => {
+const Header = () => {
     const owner = useSelector((state) => state.owner)
 
     return (
@@ -35,4 +35,4 @@ const Index = ({ userPhoto }) => {
     )
 }
 
-export default Index
+export default Header
