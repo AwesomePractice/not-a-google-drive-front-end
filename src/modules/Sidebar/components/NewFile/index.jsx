@@ -53,6 +53,14 @@ const NewFile = () => {
     setCompressed(false);
   }, [open]);
 
+  function status(response) {
+    if (response === 401 || response === 403) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    return response;
+  }
+
   const handleChangeEncrypted = (e) => {
     setEncrypted(e.target.checked);
   };
@@ -91,7 +99,9 @@ const NewFile = () => {
           },
           body,
         }
-      ).then(() => Promise.all([dispatch(fetchData())]));
+      )
+        .then(status)
+        .then(() => Promise.all([dispatch(fetchData())]));
 
     setUploading(false);
     setOpen(false);

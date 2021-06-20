@@ -46,6 +46,14 @@ const NewFolder = () => {
   const dispatch = useDispatch();
   const folder = useSelector((state) => state.rootFolder);
 
+  function status(response) {
+    if (response === 401 || response === 403) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    return response;
+  }
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -72,8 +80,9 @@ const NewFolder = () => {
         name,
         isFavourite: false,
       }),
-    }).then(() => Promise.all([dispatch(fetchData())]));
-
+    })
+      .then(status)
+      .then(() => Promise.all([dispatch(fetchData())]));
     setOpen(false);
     setName("");
   };

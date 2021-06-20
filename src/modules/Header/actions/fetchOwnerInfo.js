@@ -24,7 +24,16 @@ export const fetchOwnerInfo = (id) => (dispatch) => {
       id,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (response === 401 || response === 403) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      } else if (!response.ok) {
+        catchError(response);
+      } else {
+        res.json();
+      }
+    })
     .then((data) =>
       dispatch({
         type: OWNER_LOAD_OWNER_INFO_SUCCESS,

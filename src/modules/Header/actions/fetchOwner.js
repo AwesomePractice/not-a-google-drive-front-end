@@ -21,7 +21,16 @@ export const fetchOwner = () => (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (response === 401 || response === 403) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      } else if (!response.ok) {
+        catchError(response);
+      } else {
+        res.json();
+      }
+    })
     .then((data) => {
       dispatch(fetchOwnerInfo(data[0].owner_id));
       return dispatch({

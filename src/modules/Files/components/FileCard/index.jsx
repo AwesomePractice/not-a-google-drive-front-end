@@ -19,11 +19,15 @@ const FileCard = ({ name, id }) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      if (response.ok)
+      if (response !== 401 && response !== 403)
         response.blob().then((data) => {
           const file = window.URL.createObjectURL(data);
           window.location.assign(file);
         });
+      else {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }
     });
   };
 

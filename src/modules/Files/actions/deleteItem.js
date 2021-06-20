@@ -17,6 +17,14 @@ export const deleteItem = (id, isFolder) => (dispatch) => {
   }`;
   const token = getToken();
 
+  function status(response) {
+    if (response === 401 || response === 403) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    return response;
+  }
+
   fetch(url, {
     method: "POST",
     headers: {
@@ -27,6 +35,7 @@ export const deleteItem = (id, isFolder) => (dispatch) => {
       id,
     }),
   })
+    .then(status)
     .then(() => {
       dispatch(fetchData());
       return dispatch({ type: FILES_DELETE_FILE_SUCCESS });

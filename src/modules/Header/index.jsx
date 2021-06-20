@@ -13,6 +13,11 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function logOut() {
+  localStorage.removeItem("token");
+  window.location.reload();
+}
+
 const Header = () => {
   const owner = useSelector((state) => state.owner);
   const search = useSelector((state) => state.search);
@@ -52,6 +57,9 @@ const Header = () => {
               owner.name
             )} ${capitalizeFirstLetter(owner.surname)}`
           : "Hello!"}
+        <button type="button" onClick={logOut}>
+          Log <br /> Out
+        </button>
       </div>
     </div>
   );

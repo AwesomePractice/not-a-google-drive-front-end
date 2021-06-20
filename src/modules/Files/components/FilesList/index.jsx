@@ -44,7 +44,9 @@ const FileList = ({ route, setRoute }) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      if (response.ok) response.json().then((data) => setAllFiles(data));
+      if (response !== 401 && response !== 403)
+        response.json().then((data) => setAllFiles(data));
+      else localStorage.removeItem("token");
     });
 
     fetch("http://34.105.195.56/Folder/AllMyFolders", {
@@ -53,7 +55,9 @@ const FileList = ({ route, setRoute }) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      if (response.ok) response.json().then((data) => setAllFolders(data));
+      if (response !== 401 && response !== 403)
+        response.json().then((data) => setAllFolders(data));
+      else localStorage.removeItem("token");
     });
   }, [initialRoot]);
 
@@ -101,10 +105,14 @@ const FileList = ({ route, setRoute }) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        if (response.ok)
+        if (response !== 401 && response !== 403)
           response.json().then((data) => {
             setFavoriteFiles(data);
           });
+        else {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }
       });
 
       fetch("http://34.105.195.56/Folder/AllFavouriteFolders", {
@@ -113,9 +121,14 @@ const FileList = ({ route, setRoute }) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        response.json().then((data) => {
-          setFavoriteFolders(data);
-        });
+        if (response !== 401 && response !== 403)
+          response.json().then((data) => {
+            setFavoriteFolders(data);
+          });
+        else {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }
       });
     }
   }, [initialRoot]);

@@ -31,6 +31,12 @@ export const manageFavorite = (id, isFavorite, isFolder) => (dispatch) => {
     }),
   })
     .then(() => {
+      if (response === 401 || response === 403) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }
+    })
+    .then(() => {
       dispatch(fetchData());
       return dispatch({ type: FILES_MANAGE_FAVORITE_SUCCESS });
     })
