@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 import React from "react";
-import "./main.css";
+import "./styles.css";
 import PropTypes from "prop-types";
 
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import Icon from "../Icon";
 
 import token from "../../../../config";
 
@@ -28,7 +28,7 @@ const FileCard = ({ name, id }) => {
   return (
     <button type="button" className="fileCard" onClick={handleClickDownload}>
       <div className="fileCard--top">
-        <InsertDriveFileIcon style={{ fontSize: 130 }} />
+        <Icon name={name} isFolder={false} />
       </div>
 
       <div className="fileCard--bottom">

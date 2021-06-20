@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
 
-import FileIcon from "@material-ui/icons/InsertDriveFile";
-import FolderIcon from "@material-ui/icons/Folder";
-import PhotoIcon from "@material-ui/icons/Photo";
-import PdfIcon from "@material-ui/icons/PictureAsPdf";
-import DescriptionIcon from "@material-ui/icons/Description";
+import {
+  AiFillFileZip,
+  AiFillFilePdf,
+  AiFillFileImage,
+  AiFillFile,
+  AiFillFileText,
+  AiFillFolder,
+} from "react-icons/ai";
+
+import "./styles.css";
 
 const Icon = ({ isFolder, name }) => {
   const splt = name.split(".");
@@ -15,16 +20,22 @@ const Icon = ({ isFolder, name }) => {
       case "png":
       case "jpg":
       case "gif":
-        return <PhotoIcon />;
+        return <AiFillFileImage className="MuiSvgIcon-root icon" />;
+      case "zip":
+        return <AiFillFileZip className="MuiSvgIcon-root icon" />;
       case "pdf":
-        return <PdfIcon />;
+        return <AiFillFilePdf className="MuiSvgIcon-root icon" />;
       case "doc":
       case "docx":
       case "rtf":
       case "txt":
-        return <DescriptionIcon />;
+        return <AiFillFileText className="MuiSvgIcon-root icon" />;
       default:
-        return isFolder ? <FolderIcon /> : <FileIcon />;
+        return isFolder ? (
+          <AiFillFolder className="MuiSvgIcon-root icon" />
+        ) : (
+          <AiFillFile className="MuiSvgIcon-root icon" />
+        );
     }
   };
   return <>{getIcon()}</>;

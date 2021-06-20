@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./main.css";
+import "./styles.css";
 import PropTypes from "prop-types";
 
 const SidebarItem = ({ icon, label, pageName }) => {

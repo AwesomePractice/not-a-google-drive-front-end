@@ -1,12 +1,14 @@
 import React from "react";
-import "./main.css";
+import "./styles.css";
 
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+
 import SidebarItem from "./components/SidebarItem";
 import NewFile from "./components/NewFile";
+import NewFolder from "./components/NewFolder";
 
 const index = () => (
   <aside className="sidebar">
@@ -28,6 +30,7 @@ const index = () => (
         pageName="deleted"
       />
     </div>
+    <NewFolder />
     <NewFile />
   </aside>
 );

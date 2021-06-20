@@ -28,8 +28,16 @@ button{
     grid-template-columns: 5% 5% 55% 10% 10% 10% 5%;
 }
 
+.fileItem .MuiSvgIcon-root{
+    color: #828282;
+}
+
 .fileItem:hover{
     background-color: #f5f5f5;
+}
+
+.fileItem__icon .MuiSvgIcon-root:hover{
+    color: #0492c2;
 }
 
 .MuiSvgIcon-root.fileItem__star--disactive:hover, 
@@ -37,10 +45,6 @@ button{
 .fileItem__delete>.MuiSvgIcon-root:hover{
     color: #0492c2;
 }
-/* 
-.MuiSvgIcon-root.fileItem__star--active:hover{
-    color: #0492c2;
-} */
 
 .fileItem__name{
     background: none;

@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 // import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import StarIcon from "@material-ui/icons/Star";
-import FolderIcon from "@material-ui/icons/Folder";
+// import FolderIcon from "@material-ui/icons/Folder";
 import CancelIcon from "@material-ui/icons/Cancel";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 // import PhotoIcon from '@material-ui/icons/Photo';
@@ -128,7 +128,7 @@ const FileItem = ({
           className="fileItem__icon"
           onClick={handleClickFolder}
         >
-          <FolderIcon />
+          <Icon name={caption} isFolder={isFolder} />
         </button>
       )}
 

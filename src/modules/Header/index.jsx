@@ -28,7 +28,11 @@ const Header = () => {
       </div>
       <div className="header_searchContainer">
         <div className="header_searchbar">
-          <input type="text" placeholder="Search in Drive" />
+          <input
+            type="text"
+            placeholder="Search in Drive"
+            className="header__input"
+          />
           <SearchIcon />
         </div>
       </div>

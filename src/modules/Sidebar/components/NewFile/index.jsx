@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./main.css";
+import "./styles.css";
 
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
@@ -88,7 +88,7 @@ const NewFile = () => {
     <div className="newFile">
       <div className="newFile__container" onClick={handleOpen}>
         <AddIcon />
-        <p>Upload file</p>
+        <p>New file</p>
       </div>
 
       <Modal
