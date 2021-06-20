@@ -9,7 +9,6 @@ import logo from "../../media/logo.png";
 const url = "http://34.105.195.56";
 
 async function loginUser(credentials) {
-  console.log("credentials", credentials);
   return fetch(`${url}/User/SignIn`, {
     method: "POST",
     headers: {
