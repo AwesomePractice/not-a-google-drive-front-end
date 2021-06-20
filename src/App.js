@@ -1,64 +1,55 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
 import "./App.css";
-import { useState } from "react";
-import Header from "./modules/Header";
-import Sidebar from "./modules/Sidebar";
-import Files from "./modules/Files";
+import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
-import NotGoogleDriveLogo from "./media/logo.png";
+import HomeView from "./Views/Home/HomeView";
+import Login from "./Views/Login/login";
+import Signup from "./Views/Signup/signup";
 
-import { auth, provider } from "./firebase";
+import { getToken } from "./__shared/functions";
+
+// const getToken = () => {
+//   const tokenString = localStorage.getItem("token");
+//   const userToken = JSON.parse(tokenString);
+//   return userToken?.token;
+// };
 
 function App() {
-  const [user, setUser] = useState();
-  //   {
-  //   displayName: "Test User",
-  //   email: "test1@test.com",
-  //   emailVerified:true,
-  //   phoneNumber: null,
-  //   photoUrl: "https://lh3.googleusercontent.com/proxy/_XVbri_0HrrbESGRS0qOvgOyiJXgqM0v-PN0XSvI7WwxKI9mh6i78WgDb5NHnC7cR67bvufQBZq7-tPDTZg0XSBTDEUD4rxm1K4pyJHSV6QnvvC6o7LuniW-Y8yn"
-  // }
+  const [token, setToken] = useState(getToken());
 
-  const handleLogin = () => {
-    if (!user) {
-      auth
-        .signInWithPopup(provider)
-        .then((result) => {
-          setUser(result.user);
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    } else if (user) {
-      auth
-        .signOut()
-        .then(() => {
-          setUser(null);
-        })
-        .catch((err) => alert(err.message));
-    }
+  useEffect(() => {}, [token]);
+
+  const handleLogin = (new_token) => {
+    localStorage.setItem("token", new_token);
+    console.log(localStorage);
+    setToken(new_token);
   };
 
   return (
-    <div className="app">
-      {true ? (
-        <>
-          <Header />
-          <div className="app_main container">
-            <Sidebar />
-            <Files />
-          </div>
-        </>
-      ) : (
-        <div className="app_login">
-          <img src={NotGoogleDriveLogo} alt="Google Drive" />
-          <button type="button" onClick={handleLogin}>
-            Log in to NotAGoogleDrive
-          </button>
-        </div>
-      )}
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/Login">
+          {token ? <Redirect to="/Home" /> : <Login setToken={handleLogin} />}
+        </Route>
+        <Route path="/Signup">
+          {token ? <Redirect to="/Home" /> : <Signup setToken={handleLogin} />}
+        </Route>
+        <Route path="/Home">
+          {token ? <HomeView /> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/">
+          {token ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

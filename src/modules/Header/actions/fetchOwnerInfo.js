@@ -6,12 +6,13 @@ import {
   OWNER_LOAD_OWNER_INFO_SUCCESS,
 } from "./actionTypes";
 
-import { token } from "../../../config";
+import { getToken } from "../../../__shared/functions";
 
 export const fetchOwnerInfo = (id) => (dispatch) => {
   dispatch({ type: OWNER_FETCH_OWNER_INFO });
 
   const url = "http://34.105.195.56/User/UserInfo";
+  const token = getToken();
 
   fetch(url, {
     method: "POST",

@@ -6,7 +6,7 @@ import {
   FILES_MANAGE_FAVORITE_SUCCESS,
 } from "./actionTypes";
 
-import { token } from "../../../config";
+import { getToken } from "../../../__shared/functions";
 import { fetchData } from "../../../__shared/actions/fetchData";
 
 export const manageFavorite = (id, isFavorite, isFolder) => (dispatch) => {
@@ -17,6 +17,7 @@ export const manageFavorite = (id, isFavorite, isFolder) => (dispatch) => {
       ? "/FileUploader/SwitchFavouriteFile"
       : "/Folder/SwitchFavouriteFolder"
   }`;
+  const token = getToken();
 
   fetch(url, {
     method: "POST",
