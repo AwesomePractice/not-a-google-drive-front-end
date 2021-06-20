@@ -33,7 +33,7 @@ function App() {
           {token ? <Redirect to="/Home" /> : <Login setToken={handleLogin} />}
         </Route>
         <Route path="/Signup">
-          {token ? <Redirect to="/Home" /> : <Signup setToken={handleLogin} />}
+          {token ? <Redirect to="/Home" /> : <Signup />}
         </Route>
         <Route path="/Home">
           {token ? <HomeView /> : <Redirect to="/Login" />}
