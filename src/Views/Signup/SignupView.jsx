@@ -7,7 +7,7 @@ import "./styles.css";
 
 const url = "http://34.105.195.56";
 
-export default function Signup() {
+export default function SignupView() {
   const [login, setLogin] = useState();
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();

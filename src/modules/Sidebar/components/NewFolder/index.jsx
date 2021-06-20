@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,15 +72,10 @@ const NewFolder = () => {
         name,
         isFavourite: false,
       }),
-    }).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-      });
-    });
+    }).then(() => Promise.all([dispatch(fetchData())]));
 
     setOpen(false);
     setName("");
-    dispatch(fetchData());
   };
 
   return (

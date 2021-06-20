@@ -9,7 +9,6 @@ import logo from "../../media/logo.png";
 const url = "http://34.105.195.56";
 
 async function loginUser(credentials) {
-  console.log("credentials", credentials);
   return fetch(`${url}/User/SignIn`, {
     method: "POST",
     headers: {
@@ -19,7 +18,7 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-export default function Login({ setToken }) {
+export default function LoginView({ setToken }) {
   const [login, setLogin] = useState();
   const [password, setPassword] = useState();
   const [role, setRole] = useState("string");
@@ -64,6 +63,6 @@ export default function Login({ setToken }) {
   );
 }
 
-Login.propTypes = {
+LoginView.propTypes = {
   setToken: PropTypes.func.isRequired,
 };

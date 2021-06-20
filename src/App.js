@@ -11,8 +11,8 @@ import {
 } from "react-router-dom";
 
 import HomeView from "./Views/Home/HomeView";
-import Login from "./Views/Login/login";
-import Signup from "./Views/Signup/signup";
+import LoginView from "./Views/Login/LoginView";
+import SignupView from "./Views/Signup/SignupView";
 
 import { getToken } from "./__shared/functions";
 
@@ -30,10 +30,14 @@ function App() {
     <Router>
       <Switch>
         <Route path="/Login">
-          {token ? <Redirect to="/Home" /> : <Login setToken={handleLogin} />}
+          {token ? (
+            <Redirect to="/Home" />
+          ) : (
+            <LoginView setToken={handleLogin} />
+          )}
         </Route>
         <Route path="/Signup">
-          {token ? <Redirect to="/Home" /> : <Signup />}
+          {token ? <Redirect to="/Home" /> : <SignupView />}
         </Route>
         <Route path="/Home">
           {token ? <HomeView /> : <Redirect to="/Login" />}
