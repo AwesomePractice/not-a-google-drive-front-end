@@ -247,7 +247,7 @@ const FileList = ({ route, setRoute }) => {
           <FileItem
             id={id}
             caption={name}
-            size={size}
+            size={size || "-"}
             isFavorite={false}
             isEncrypted={encrypted}
             isCompressed={compressed}
@@ -278,7 +278,7 @@ const FileList = ({ route, setRoute }) => {
 };
 
 FileList.propTypes = {
-  route: PropTypes.objectOf(PropTypes.string).isRequired,
+  route: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   setRoute: PropTypes.func.isRequired,
 };
 
