@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import "./styles.css";
+import logo from "../../media/logo.png";
 
 const url = "http://34.105.195.56";
 
@@ -22,10 +23,7 @@ export default function Login({ setToken }) {
   const [password, setPassword] = useState();
   const [role, setRole] = useState("string");
 
-  useEffect(() => {
-    console.log("login: ", login);
-    console.log("pass: ", password);
-  }, [login, password]);
+  // useEffect(() => {}, [login, password]);
 
   const handleSubmit = async (e) => {
     setRole("string");
@@ -35,19 +33,19 @@ export default function Login({ setToken }) {
       password,
       role,
     });
-    console.log(token);
     setToken(token?.access_token);
   };
 
   return (
     <div className="login_wrapper">
-      <h1>Log in to NotAGoogleDrive</h1>
+      <img src={logo} alt="NotAGoogleDrive" className="login__logo" />
+      <h1 className="login__header">Log in to NotAGoogleDrive</h1>
       <form onSubmit={handleSubmit} className="login_form">
-        <label>
+        <label className="login__useranem">
           <p>Username</p>
           <input type="text" onChange={(e) => setLogin(e.target.value)} />
         </label>
-        <label>
+        <label className="login__password">
           <p>Password</p>
           <input
             type="password"
@@ -55,7 +53,9 @@ export default function Login({ setToken }) {
           />
         </label>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" className="login__submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>
