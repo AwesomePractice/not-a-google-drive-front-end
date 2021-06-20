@@ -11,11 +11,13 @@ import {
 
 import "./styles.css";
 
-const Icon = ({ isFolder, name }) => {
+const Icon = ({ isFolder, name, isCompressed }) => {
   const splt = name.split(".");
   const type = splt[splt.length - 1];
 
   const getIcon = () => {
+    if (isCompressed) return <AiFillFileZip className="MuiSvgIcon-root icon" />;
+
     switch (type) {
       case "png":
       case "jpg":
@@ -44,6 +46,11 @@ const Icon = ({ isFolder, name }) => {
 Icon.propTypes = {
   isFolder: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
+  isCompressed: PropTypes.bool,
+};
+
+Icon.defaultProps = {
+  isCompressed: false,
 };
 
 export default Icon;

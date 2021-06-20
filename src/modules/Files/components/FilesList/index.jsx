@@ -67,9 +67,8 @@ const FileList = ({ route, setRoute }) => {
       )
     );
     searchInRoot(initialRoot);
-    console.log("search", searchResult);
     if (search === "") setSearchResult([]);
-  }, [search, initialRoot]);
+  }, [search]);
 
   useEffect(() => {
     if (page[0] === "-")
@@ -94,7 +93,6 @@ const FileList = ({ route, setRoute }) => {
       }).then((response) => {
         response.json().then((data) => {
           setFavoriteFiles(data);
-          console.log(favoriteFiles);
         });
       });
 
@@ -106,7 +104,6 @@ const FileList = ({ route, setRoute }) => {
       }).then((response) => {
         response.json().then((data) => {
           setFavoriteFolders(data);
-          console.log(favoriteFolders);
         });
       });
     }

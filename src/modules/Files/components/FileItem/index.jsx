@@ -55,8 +55,6 @@ const FileItem = ({
     monthNames[date.getMonth() + 1]
   } ${date.getFullYear()}`;
 
-  console.log(isEncrypted, " ", isCompressed);
-
   const getReadableFileSizeString = (fileSizeInBytes) => {
     if (fileSizeInBytes === "-") return "-";
 
@@ -120,7 +118,11 @@ const FileItem = ({
           title="Download file"
           onClick={handleClickDownload}
         >
-          <Icon name={caption} isFolder={isFolder} />
+          <Icon
+            name={caption}
+            isFolder={isFolder}
+            isCompressed={isCompressed}
+          />
         </button>
       ) : (
         <button
@@ -128,7 +130,11 @@ const FileItem = ({
           className="fileItem__icon"
           onClick={handleClickFolder}
         >
-          <Icon name={caption} isFolder={isFolder} />
+          <Icon
+            name={caption}
+            isFolder={isFolder}
+            isCompressed={isCompressed}
+          />
         </button>
       )}
 
