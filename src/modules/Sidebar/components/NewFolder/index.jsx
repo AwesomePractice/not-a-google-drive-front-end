@@ -9,7 +9,7 @@ import "./styles.css";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import token from "../../../../config";
+import { token } from "../../../../config";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
 function getModalStyle() {
