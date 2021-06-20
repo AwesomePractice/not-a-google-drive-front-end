@@ -5,7 +5,7 @@ import {
   FILES_LOAD_DATA_FAIL,
   FILES_LOAD_DATA_SUCCESS,
   SHARED_FILES_LOAD_DATA_SUCCESS,
-} from "./actionTypes";
+} from "../__shared/actions/actionTypes";
 
 import token from "../../config";
 
@@ -26,7 +26,6 @@ export const fetchData = () => (dispatch) => {
         type: SHARED_FILES_LOAD_DATA_SUCCESS,
         payload: data[0].available_files,
       });
-      console.log("data", data);
       return dispatch({
         type: FILES_LOAD_DATA_SUCCESS,
         payload: data[0].root_folder,

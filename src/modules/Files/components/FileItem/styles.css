@@ -24,9 +24,8 @@ button{
     display: grid;
     justify-items: start;
     align-items: center;
-    grid-template: "fileItem__icon fileItem_star fileItem__name fileItem__date fileItem__size fileItem__delete" auto
-                    /auto;
-    grid-template-columns: 5% 5% 65% 10% 10% 5%;
+    grid-template: "fileItem__icon fileItem_star fileItem__name fileItem_encrypted fileItem__date fileItem__size fileItem__delete" auto;
+    grid-template-columns: 5% 5% 55% 10% 10% 10% 5%;
 }
 
 .fileItem:hover{

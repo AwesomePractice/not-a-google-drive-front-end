@@ -24,13 +24,12 @@ export const fetchOwnerInfo = (id) => (dispatch) => {
     }),
   })
     .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      return dispatch({
+    .then((data) =>
+      dispatch({
         type: OWNER_LOAD_OWNER_INFO_SUCCESS,
         payload: { name: data.FirstName, surname: data.LastName },
-      });
-    })
+      })
+    )
     .catch((err) =>
       dispatch({ type: OWNER_LOAD_OWNER_INFO_FAIL, payload: err })
     );

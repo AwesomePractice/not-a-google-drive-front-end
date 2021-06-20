@@ -5,14 +5,17 @@ import "./styles.css";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+// import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import StarIcon from "@material-ui/icons/Star";
 import FolderIcon from "@material-ui/icons/Folder";
 import CancelIcon from "@material-ui/icons/Cancel";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+// import PhotoIcon from '@material-ui/icons/Photo';
 
 import { manageFavorite } from "../../actions/manageFavorite";
 import { deleteItem } from "../../actions/deleteItem";
+import Icon from "../Icon";
 
 import token from "../../../../config";
 
@@ -37,11 +40,22 @@ const decapsulateDateFromId = (id) => {
   return new Date(decapsulatedDate);
 };
 
-const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
+const FileItem = ({
+  id,
+  caption,
+  size,
+  isFavorite,
+  isFolder,
+  handleChange,
+  isEncrypted,
+  isCompressed,
+}) => {
   const date = decapsulateDateFromId(id);
   const fileDate = `${date.getDate()} ${
     monthNames[date.getMonth() + 1]
   } ${date.getFullYear()}`;
+
+  console.log(isEncrypted, " ", isCompressed);
 
   const getReadableFileSizeString = (fileSizeInBytes) => {
     if (fileSizeInBytes === "-") return "-";
@@ -63,7 +77,7 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
   const handleClickFavorite = (e) => {
     e.preventDefault();
 
-    Promise.all([dispatch(manageFavorite(id, !isFavorite, icon))]);
+    Promise.all([dispatch(manageFavorite(id, !isFavorite, isFolder))]);
   };
 
   const handleClickFolder = (e) => {
@@ -75,7 +89,7 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
   const handleClickDelete = (e) => {
     e.preventDefault();
 
-    Promise.all([dispatch(deleteItem(id, icon))]);
+    Promise.all([dispatch(deleteItem(id, isFolder))]);
   };
 
   const handleClickDownload = (e) => {
@@ -90,6 +104,7 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
       if (response.ok)
         response.blob().then((data) => {
           console.log(data);
+          // TODO: fix downloading name and type
           const file = window.URL.createObjectURL(data);
           window.location.assign(file);
         });
@@ -98,18 +113,16 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
 
   return (
     <div className="fileItem">
-      {icon === "file" && (
+      {!isFolder ? (
         <button
           type="button"
           className="fileItem__icon"
           title="Download file"
           onClick={handleClickDownload}
         >
-          <InsertDriveFileIcon />
+          <Icon name={caption} isFolder={isFolder} />
         </button>
-      )}
-
-      {icon === "folder" && (
+      ) : (
         <button
           type="button"
           className="fileItem__icon"
@@ -131,7 +144,7 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
         )}
       </button>
 
-      {icon === "file" && (
+      {!isFolder ? (
         <button
           type="button"
           className="fileItem__name"
@@ -140,9 +153,7 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
         >
           <p>{caption}</p>
         </button>
-      )}
-
-      {icon === "folder" && (
+      ) : (
         <button
           type="button"
           className="fileItem__name"
@@ -150,6 +161,12 @@ const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
         >
           <p>{caption}</p>
         </button>
+      )}
+
+      {isEncrypted ? (
+        <VpnKeyIcon className="fileItem_encrypted" />
+      ) : (
+        <div className="fileItem_encrypted" />
       )}
       <p className="fileItem__date">{fileDate}</p>
       <p className="fileItem__size">{getReadableFileSizeString(size)}</p>
@@ -171,12 +188,16 @@ FileItem.propTypes = {
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isFavorite: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
     .isRequired,
-  icon: PropTypes.string.isRequired,
+  isFolder: PropTypes.bool.isRequired,
   handleChange: PropTypes.func,
+  isEncrypted: PropTypes.bool,
+  isCompressed: PropTypes.bool,
 };
 
 FileItem.defaultProps = {
   handleChange: null,
+  isEncrypted: false,
+  isCompressed: false,
 };
 
 export default FileItem;

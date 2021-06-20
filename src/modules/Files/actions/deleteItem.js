@@ -9,11 +9,11 @@ import {
 import token from "../../../config";
 import { fetchData } from "../../../__shared/actions/fetchData";
 
-export const deleteItem = (id, icon) => (dispatch) => {
+export const deleteItem = (id, isFolder) => (dispatch) => {
   dispatch({ type: FILES_DELETE_FILE });
 
   const url = `http://34.105.195.56${
-    icon === "file" ? "/FileUploader/DeleteFile" : "/Folder/DeleteFolder"
+    !isFolder ? "/FileUploader/DeleteFile" : "/Folder/DeleteFolder"
   }`;
 
   fetch(url, {

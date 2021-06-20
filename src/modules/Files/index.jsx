@@ -5,20 +5,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../__shared/actions/fetchData";
 
-// import FileItem from "./components/FileItem";
-// import FileCard from "./components/FileCard";
 import Path from "./components/Path";
 import FilesRow from "./components/FilesRow";
 import FileList from "./components/FilesList";
 
 import "./styles.css";
 import "../../main.css";
-
-// const noFiles = (
-//   <div className="no-files">
-//     <p>No files</p>
-//   </div>
-// );
 
 function searchTree(element, matchingId) {
   if (element.id === matchingId) {
@@ -38,18 +30,25 @@ function searchTree(element, matchingId) {
 const Files = () => {
   const page = useSelector((state) => state.page);
   const initialRoot = useSelector((state) => state.files);
-  // const root = useSelector((state) => state.rootFolder);
-  // const sharedFiles = useSelector((state) => state.sharedFiles);
+  const root = useSelector((state) => state.rootFolder);
   const dispatch = useDispatch();
 
   const [route, setRoute] = useState([{ name: page, id: "" }]);
-  //   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     Promise.all([dispatch(fetchData())]);
 
     dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
   }, []);
+
+  useEffect(() => {}, [root]);
+
+  useEffect(() => {
+    if (page[0] === "-")
+      dispatch({ type: "page/setPage", payload: page.slice(1) });
+    setRoute([{ name: page, id: "" }]);
+    dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
+  }, [page]);
 
   const handleChange = (folderId) => {
     if (folderId === "") {
@@ -69,11 +68,13 @@ const Files = () => {
     }
   };
 
+  const handleRouteChange = (newRoute) => setRoute(newRoute);
+
   return (
     <div className="fileView">
       <Path path={route} handleChange={handleChange} />
       <FilesRow page={page} />
-      <FileList />
+      <FileList route={route} setRoute={handleRouteChange} />
     </div>
   );
 };

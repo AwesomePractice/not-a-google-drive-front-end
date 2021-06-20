@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-expressions */
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { searchTree } from "../../../../__shared/functions";
+import PropTypes from "prop-types";
 
+import { searchTree } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
 import "./styles.css";
@@ -14,14 +15,12 @@ const noFiles = () => (
   </div>
 );
 
-const FileList = () => {
+const FileList = ({ route, setRoute }) => {
   const page = useSelector((state) => state.page);
   const initialRoot = useSelector((state) => state.files);
   const root = useSelector((state) => state.rootFolder);
   const sharedFiles = useSelector((state) => state.sharedFiles);
   const dispatch = useDispatch();
-
-  const [route, setRoute] = useState([{ name: page, id: "" }]);
 
   useEffect(() => {}, [root, sharedFiles]);
 
@@ -70,29 +69,18 @@ const FileList = () => {
         return noFiles;
 
       return currentFiles
-        ?.map(({ id, name, size, favourite }) => (
+        ?.map(({ id, name, size, favourite, encrypted, compressed }) => (
           <FileItem
             id={id}
             caption={name}
             size={size}
             isFavorite={favourite}
-            icon="file"
+            isEncrypted={encrypted}
+            isCompressed={compressed}
+            isFolder={false}
             key={id}
           />
         ))
-        .concat(
-          sharedFiles?.map(({ id, name, favourite }) => (
-            <FileItem
-              id={id}
-              caption={name}
-              size="-"
-              isFavorite={favourite}
-              icon="folder"
-              handleChange={handleChange}
-              key={id}
-            />
-          ))
-        )
         .concat(
           currentFolders?.map(({ id, name, favourite }) => (
             <FileItem
@@ -100,7 +88,7 @@ const FileList = () => {
               caption={name}
               size="-"
               isFavorite={favourite}
-              icon="folder"
+              isFolder
               handleChange={handleChange}
               key={id}
             />
@@ -117,16 +105,20 @@ const FileList = () => {
         (item) => item.favourite === true
       );
       if (favoriteFiles.length > 0)
-        return favoriteFiles.map(({ id, name, size, favourite }) => (
-          <FileItem
-            id={id}
-            caption={name}
-            size={size}
-            isFavorite={favourite}
-            icon="file"
-            key={id}
-          />
-        ));
+        return favoriteFiles.map(
+          ({ id, name, size, favourite, encrypted, compressed }) => (
+            <FileItem
+              id={id}
+              caption={name}
+              size={size}
+              isFavorite={favourite}
+              isEncrypted={encrypted}
+              isCompressed={compressed}
+              isFolder={false}
+              key={id}
+            />
+          )
+        );
       return noFiles;
     }
     return noFiles;
@@ -134,14 +126,16 @@ const FileList = () => {
 
   const sharedFiles_titles = () => {
     if (root && sharedFiles?.length > 0) {
-      return sharedFiles.map(({ id, name, size }) => (
+      return sharedFiles.map(({ id, name, size, encrypted, compressed }) => (
         <FileItem
           id={id}
           caption={name}
           timestamp={Date.now()}
           size={size}
           isFavorite={false}
-          icon="file"
+          isEncrypted={encrypted}
+          isCompressed={compressed}
+          isFolder={false}
           key={id}
         />
       ));
@@ -160,6 +154,11 @@ const FileList = () => {
       {page === "shared" && sharedFiles_titles()}
     </>
   );
+};
+
+FileList.propTypes = {
+  route: PropTypes.objectOf(PropTypes.string).isRequired,
+  setRoute: PropTypes.func.isRequired,
 };
 
 export default FileList;
