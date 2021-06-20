@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-// import Signup from "../Signup/signup";
 
 import "./styles.css";
 
 const url = "http://34.105.195.56";
 
 async function loginUser(credentials) {
+  console.log("credentials", credentials);
   return fetch(`${url}/User/SignIn`, {
     method: "POST",
     headers: {
@@ -22,6 +22,11 @@ export default function Login({ setToken }) {
   const [password, setPassword] = useState();
   const [role, setRole] = useState("string");
 
+  useEffect(() => {
+    console.log("login: ", login);
+    console.log("pass: ", password);
+  }, [login, password]);
+
   const handleSubmit = async (e) => {
     setRole("string");
     e.preventDefault();
@@ -30,7 +35,8 @@ export default function Login({ setToken }) {
       password,
       role,
     });
-    setToken(token);
+    console.log(token);
+    setToken(token?.access_token);
   };
 
   return (

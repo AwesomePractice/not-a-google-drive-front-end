@@ -7,12 +7,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
-import { searchTree } from "../../../../__shared/functions";
+import { searchTree, getToken } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
 import "./styles.css";
 import { SEACRH_SET_SEARCH } from "../../../Header/actions/actionTypes";
-import { token } from "../../../../config";
 
 const noFiles = () => (
   <div className="no-files">
@@ -34,6 +33,8 @@ const FileList = ({ route, setRoute }) => {
   const [allFiles, setAllFiles] = useState([]);
   const [allFolders, setAllFolders] = useState([]);
 
+  const token = getToken();
+
   useEffect(() => {}, [root, sharedFiles]);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const FileList = ({ route, setRoute }) => {
     }).then((response) => {
       if (response.ok) response.json().then((data) => setAllFolders(data));
     });
-  }, []);
+  }, [initialRoot]);
 
   useEffect(() => {
     setSearchResult(
@@ -76,9 +77,10 @@ const FileList = ({ route, setRoute }) => {
         )
     );
     if (search === "") setSearchResult([]);
-  }, [search]);
+  }, [search, allFolders, allFiles]);
 
   useEffect(() => {
+    dispatch({ type: SEACRH_SET_SEARCH, payload: "" });
     if (page[0] === "-")
       dispatch({ type: "page/setPage", payload: page.slice(1) });
     setRoute([{ name: page, id: "" }]);

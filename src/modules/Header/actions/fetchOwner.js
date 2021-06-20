@@ -6,13 +6,14 @@ import {
   OWNER_LOAD_OWNER_SUCCESS,
 } from "./actionTypes";
 
-import * as token from "../../../config";
+import { getToken } from "../../../__shared/functions";
 import { fetchOwnerInfo } from "./fetchOwnerInfo";
 
 export const fetchOwner = () => (dispatch) => {
   dispatch({ type: OWNER_FETCH_OWNER });
 
   const url = "http://34.105.195.56/User/FilesInfo";
+  const token = getToken();
 
   fetch(url, {
     method: "GET",

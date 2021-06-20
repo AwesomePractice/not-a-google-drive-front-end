@@ -16,7 +16,7 @@ import { manageFavorite } from "../../actions/manageFavorite";
 import { deleteItem } from "../../actions/deleteItem";
 import Icon from "../Icon";
 
-import { token } from "../../../../config";
+import { getToken } from "../../../../__shared/functions";
 
 const monthNames = [
   "Jan",
@@ -54,6 +54,8 @@ const FileItem = ({
   const fileDate = `${date.getDate()} ${
     monthNames[date.getMonth() + 1]
   } ${date.getFullYear()}`;
+
+  const token = getToken();
 
   const getReadableFileSizeString = (fileSizeInBytes) => {
     if (fileSizeInBytes === "-") return "-";

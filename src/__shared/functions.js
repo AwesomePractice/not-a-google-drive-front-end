@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-plusplus */
 export function searchTree(element, matchingId) {
@@ -14,3 +15,8 @@ export function searchTree(element, matchingId) {
   }
   return null;
 }
+
+export const getToken = () => {
+  const tokenString = localStorage.getItem("token");
+  return tokenString;
+};

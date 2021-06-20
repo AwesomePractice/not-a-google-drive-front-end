@@ -9,7 +9,7 @@ import "./styles.css";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { token } from "../../../../config";
+import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
 function getModalStyle() {
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NewFile = () => {
   const classes = useStyles();
+  const token = getToken();
 
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);

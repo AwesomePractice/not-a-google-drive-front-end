@@ -5,9 +5,11 @@ import PropTypes from "prop-types";
 
 import Icon from "../Icon";
 
-import { token } from "../../../../config";
+import { getToken } from "../../../../__shared/functions";
 
 const FileCard = ({ name, id }) => {
+  const token = getToken();
+
   const handleClickDownload = (e) => {
     e.preventDefault();
 
