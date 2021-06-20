@@ -1,4 +1,4 @@
-TODO: Adjust some things in accordance with ux. For example, move "New" button from sidebar to filesView. Also sideIcons(on the right) may be removed.
+TODO: Add authorization and searching by name
 
 # Getting Started with Create React App
 
