@@ -23,7 +23,6 @@ function App() {
 
   const handleLogin = (new_token) => {
     localStorage.setItem("token", new_token);
-    console.log(localStorage);
     setToken(new_token);
   };
 

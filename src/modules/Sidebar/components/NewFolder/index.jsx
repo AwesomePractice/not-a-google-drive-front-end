@@ -9,13 +9,18 @@ import "./styles.css";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { token } from "../../../../config";
+import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
 function getModalStyle() {
   return {
     top: `50%`,
     left: `50%`,
+    height: `30%`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `center`,
+    flexDirection: `column`,
     transform: `translate(-50%, -50%)`,
   };
 }
@@ -33,11 +38,12 @@ const useStyles = makeStyles((theme) => ({
 
 const NewFolder = () => {
   const classes = useStyles();
+  const token = getToken();
 
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [name, setName] = useState("");
+
   const dispatch = useDispatch();
   const folder = useSelector((state) => state.rootFolder);
 
@@ -50,38 +56,32 @@ const NewFolder = () => {
   };
 
   const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
+    setName(e.target.value);
   };
 
-  const handleUpload = () => {
-    setUploading(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const body = new FormData();
-    console.log(file);
-    body.append("fileUpload", file);
-
-    fetch(
-      `http://34.105.195.56/FileUploader/UploadFile?compressed=false&encrypted=false&favourite=false&folderId=${folder.id}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body,
-      }
-    ).then((response) => {
+    fetch(`http://34.105.195.56/Folder/CreateFolder`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        parentId: folder.id,
+        name,
+        isFavourite: false,
+      }),
+    }).then((response) => {
       response.json().then((data) => {
         console.log(data);
       });
-
-      setUploading(false);
-      setOpen(false);
-      setFile(null);
-
-      dispatch(fetchData());
     });
+
+    setOpen(false);
+    setName("");
+    dispatch(fetchData());
   };
 
   return (
@@ -98,17 +98,22 @@ const NewFolder = () => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <p>Select files you want to upload:</p>
-          {uploading ? (
-            <p>Uploading...</p>
-          ) : (
-            <>
-              <input type="file" onChange={handleChange} />
-              <button type="button" onClick={handleUpload}>
-                Upload
-              </button>
-            </>
-          )}
+          <p style={{ marginBottom: "20px" }}>Text a name</p>
+          <input
+            type="text"
+            placeholder="New folder"
+            className="newFolder__input"
+            value={name}
+            onChange={handleChange}
+            style={{ marginBottom: "30px" }}
+          />
+          <button
+            className="newFolder__submit"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Create
+          </button>
         </div>
       </Modal>
     </div>
