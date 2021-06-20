@@ -172,8 +172,13 @@ const FileList = ({ route, setRoute }) => {
 
   const favoriteFiles_titles = () => {
     if (root) {
-      if (favoriteFiles?.length > 0 || favoriteFolders?.length > 0)
-        return favoriteFiles
+      const files = route.length > 1 ? root?.files : favoriteFiles;
+      let folders = favoriteFolders;
+      if (route.length > 1) {
+        folders = root?.children?.map(({ id }) => id);
+      }
+      if (files?.length > 0 || folders?.length > 0)
+        return files
           .map(({ id, name, size, favourite, encrypted, compressed }) => (
             <FileItem
               id={id}
