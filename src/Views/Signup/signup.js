@@ -13,7 +13,7 @@ async function signupUser(credentials) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then((data) => data.json(), document.write(JSON.stringify(credentials)));
+  }).then((data) => data.json());
 }
 
 export default function Signup({ setToken }) {
