@@ -11,7 +11,7 @@ import { searchTree } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
 import "./styles.css";
-import token from "../../../../config";
+import { token } from "../../../../config";
 
 const noFiles = () => (
   <div className="no-files">
