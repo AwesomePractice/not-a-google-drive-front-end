@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div className="app">
-      {user ? (
+      {true ? (
         <>
           <Header />
           <div className="app_main container">

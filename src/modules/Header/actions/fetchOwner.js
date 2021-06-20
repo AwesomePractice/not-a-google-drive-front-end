@@ -6,7 +6,7 @@ import {
   OWNER_LOAD_OWNER_SUCCESS,
 } from "./actionTypes";
 
-import token from "../../../config";
+import { token } from "../../../config";
 import { fetchOwnerInfo } from "./fetchOwnerInfo";
 
 export const fetchOwner = () => (dispatch) => {

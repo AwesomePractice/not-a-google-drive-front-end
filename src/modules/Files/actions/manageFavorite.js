@@ -6,7 +6,7 @@ import {
   FILES_MANAGE_FAVORITE_SUCCESS,
 } from "./actionTypes";
 
-import token from "../../../config";
+import { token } from "../../../config";
 import { fetchData } from "../../../__shared/actions/fetchData";
 
 export const manageFavorite = (id, isFavorite, isFolder) => (dispatch) => {

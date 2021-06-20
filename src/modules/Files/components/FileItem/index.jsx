@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
 import React from "react";
@@ -5,19 +6,17 @@ import "./styles.css";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
-// import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import StarIcon from "@material-ui/icons/Star";
-// import FolderIcon from "@material-ui/icons/Folder";
 import CancelIcon from "@material-ui/icons/Cancel";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
-// import PhotoIcon from '@material-ui/icons/Photo';
+import { RiShareFill } from "react-icons/ri";
 
 import { manageFavorite } from "../../actions/manageFavorite";
 import { deleteItem } from "../../actions/deleteItem";
 import Icon from "../Icon";
 
-import token from "../../../../config";
+import { token } from "../../../../config";
 
 const monthNames = [
   "Jan",
@@ -49,13 +48,12 @@ const FileItem = ({
   handleChange,
   isEncrypted,
   isCompressed,
+  shared,
 }) => {
   const date = decapsulateDateFromId(id);
   const fileDate = `${date.getDate()} ${
     monthNames[date.getMonth() + 1]
   } ${date.getFullYear()}`;
-
-  console.log(isEncrypted, " ", isCompressed);
 
   const getReadableFileSizeString = (fileSizeInBytes) => {
     if (fileSizeInBytes === "-") return "-";
@@ -111,6 +109,10 @@ const FileItem = ({
     });
   };
 
+  const fileItemStarClass = shared
+    ? "fileItem__star--disable"
+    : "fileItem__star";
+
   return (
     <div className="fileItem">
       {!isFolder ? (
@@ -120,7 +122,11 @@ const FileItem = ({
           title="Download file"
           onClick={handleClickDownload}
         >
-          <Icon name={caption} isFolder={isFolder} />
+          <Icon
+            name={caption}
+            isFolder={isFolder}
+            isCompressed={isCompressed}
+          />
         </button>
       ) : (
         <button
@@ -128,13 +134,17 @@ const FileItem = ({
           className="fileItem__icon"
           onClick={handleClickFolder}
         >
-          <Icon name={caption} isFolder={isFolder} />
+          <Icon
+            name={caption}
+            isFolder={isFolder}
+            isCompressed={isCompressed}
+          />
         </button>
       )}
 
       <button
         type="button"
-        className="fileItem__star"
+        className={fileItemStarClass}
         onClick={handleClickFavorite}
       >
         {isFavorite ? (
@@ -178,6 +188,9 @@ const FileItem = ({
       >
         <CancelIcon />
       </button>
+      <button type="button" className="fileItem__share fileItem__button">
+        <RiShareFill className="MuiSvgIcon-root icon" />
+      </button>
     </div>
   );
 };
@@ -192,12 +205,14 @@ FileItem.propTypes = {
   handleChange: PropTypes.func,
   isEncrypted: PropTypes.bool,
   isCompressed: PropTypes.bool,
+  shared: PropTypes.bool,
 };
 
 FileItem.defaultProps = {
   handleChange: null,
   isEncrypted: false,
   isCompressed: false,
+  shared: false,
 };
 
 export default FileItem;

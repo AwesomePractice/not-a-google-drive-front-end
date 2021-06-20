@@ -7,6 +7,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import NotGoogleDriveLogo from "../../media/logo.png";
 
 import { fetchOwner } from "./actions/fetchOwner";
+import { SEACRH_SET_SEARCH } from "./actions/actionTypes";
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -14,11 +15,17 @@ function capitalizeFirstLetter(string) {
 
 const Header = () => {
   const owner = useSelector((state) => state.owner);
+  const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
   useEffect(() => {
     Promise.all([dispatch(fetchOwner())]);
   }, []);
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    dispatch({ type: SEACRH_SET_SEARCH, payload: e.target.value });
+  };
 
   return (
     <div className="header container">
@@ -32,6 +39,8 @@ const Header = () => {
             type="text"
             placeholder="Search in Drive"
             className="header__input"
+            value={search}
+            onChange={handleChange}
           />
           <SearchIcon />
         </div>

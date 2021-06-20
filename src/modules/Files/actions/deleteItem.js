@@ -6,7 +6,7 @@ import {
   FILES_DELETE_FILE_SUCCESS,
 } from "./actionTypes";
 
-import token from "../../../config";
+import { token } from "../../../config";
 import { fetchData } from "../../../__shared/actions/fetchData";
 
 export const deleteItem = (id, isFolder) => (dispatch) => {
