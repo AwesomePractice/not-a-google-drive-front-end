@@ -32,3 +32,21 @@
     color: #fff !important;
     margin-right: auto;
 }
+
+.modal__checkbox--contanier{
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.modal__checkbox{
+    margin-right: 10px;
+}
+
+.modal__upload{
+    width: 100px;
+    height: 30px;
+    background-color: #0492c2;
+    color: #fff;
+}
