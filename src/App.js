@@ -48,7 +48,6 @@ function App() {
         <Route
           path="/Home"
           render={() => (token ? <Home /> : <Login setToken={setToken} />)}
-          // render={() => (token ? <Home /> : <Home />)}
         />
         <Route path="/Login">
           <Login setToken={setToken} />

@@ -26,7 +26,7 @@ export const fetchData = () => (dispatch) => {
         type: SHARED_FILES_LOAD_DATA_SUCCESS,
         payload: data[0].available_files,
       });
-      console.log("data", data);
+      // console.log("data", data);
       return dispatch({
         type: FILES_LOAD_DATA_SUCCESS,
         payload: data[0].root_folder,
