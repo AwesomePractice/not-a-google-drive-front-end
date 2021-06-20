@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,7 +79,6 @@ const NewFile = () => {
     setUploading(true);
 
     const body = new FormData();
-    console.log(file);
     body.append("fileUpload", file);
 
     if (body)
@@ -93,17 +91,11 @@ const NewFile = () => {
           },
           body,
         }
-      ).then((response) => {
-        response.json().then((data) => {
-          console.log(data);
-        });
+      ).then(() => Promise.all([dispatch(fetchData())]));
 
-        setUploading(false);
-        setOpen(false);
-        setFile(null);
-
-        dispatch(fetchData());
-      });
+    setUploading(false);
+    setOpen(false);
+    setFile(null);
   };
 
   return (

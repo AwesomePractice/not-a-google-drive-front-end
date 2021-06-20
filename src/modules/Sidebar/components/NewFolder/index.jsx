@@ -72,11 +72,10 @@ const NewFolder = () => {
         name,
         isFavourite: false,
       }),
-    });
+    }).then(() => Promise.all([dispatch(fetchData())]));
 
     setOpen(false);
     setName("");
-    dispatch(fetchData());
   };
 
   return (
