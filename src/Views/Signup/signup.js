@@ -19,6 +19,7 @@ async function signupUser(credentials) {
   if (response === 401 || response === 403) {
     localStorage.removeItem("token");
   }
+  window.location.reload();
   return response.json();
 }
 
