@@ -32,3 +32,10 @@
 .newFolder__container .MuiSvgIcon-root{
     margin-right: auto;
 }
+
+.newFolder__submit{
+    width: 100px;
+    height: 30px;
+    background-color: #0492c2;
+    color: #fff;
+}
