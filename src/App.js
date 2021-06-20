@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,9 +9,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Header from "./modules/Header";
-import Sidebar from "./modules/Sidebar";
-import Files from "./modules/Files";
+import HomeView from "./Views/Home/HomeView";
 import Login from "./Views/Login/login";
 import Signup from "./Views/Signup/signup";
 
@@ -39,51 +37,30 @@ function useToken() {
 function App() {
   const { token, setToken } = useToken();
 
-  // if (!token) {
-  //   <Login setToken={setToken} />;
-  // }
+  useEffect(() => {
+    console.log("use effect ", token);
+  }, [token]);
+
+  console.log(token);
+  console.log(useToken());
+
   return (
     <Router>
       <Switch>
-        <Route
-          path="/Home"
-          render={() => (token ? <Home /> : <Login setToken={setToken} />)}
-        />
         <Route path="/Login">
           <Login setToken={setToken} />
         </Route>
         <Route path="/Signup">
           <Signup setToken={setToken} />
         </Route>
+        <Route path="/Home">
+          {token ? <HomeView /> : <Redirect to="/Login" />}
+        </Route>
         <Route path="/">
-          <Redirect to="/Home" />
+          {token ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
         </Route>
       </Switch>
     </Router>
-  );
-}
-
-function Home() {
-  return (
-    <div className="app">
-      {token ? (
-        <>
-          <Header />
-          <div className="app_main container">
-            <Sidebar />
-            <Files />
-          </div>
-        </>
-      ) : (
-        // <div className="app_login">
-        //   <img src={NotGoogleDriveLogo} alt="Google Drive" />
-        //   <button type="button" onClick={handleLogin}>
-        //     Log in to NotAGoogleDrive
-        //   </button>
-        // </div>
-        <Login />
-      )}
-    </div>
   );
 }
 
