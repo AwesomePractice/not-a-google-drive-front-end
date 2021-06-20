@@ -54,7 +54,7 @@ const FileList = ({ route, setRoute }) => {
     }).then((response) => {
       if (response.ok) response.json().then((data) => setAllFolders(data));
     });
-  }, []);
+  }, [initialRoot]);
 
   useEffect(() => {
     setSearchResult(
@@ -76,9 +76,10 @@ const FileList = ({ route, setRoute }) => {
         )
     );
     if (search === "") setSearchResult([]);
-  }, [search]);
+  }, [search, allFolders, allFiles]);
 
   useEffect(() => {
+    dispatch({ type: SEACRH_SET_SEARCH, payload: "" });
     if (page[0] === "-")
       dispatch({ type: "page/setPage", payload: page.slice(1) });
     setRoute([{ name: page, id: "" }]);
