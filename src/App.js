@@ -2,16 +2,50 @@
 /* eslint-disable no-alert */
 import "./App.css";
 import { useState } from "react";
+// import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import Header from "./modules/Header";
 import Sidebar from "./modules/Sidebar";
 import Files from "./modules/Files";
+import Login from "./Views/Login/login";
+// import Signup from "./Views/Signup/signup";
 
 import NotGoogleDriveLogo from "./media/logo.png";
 
-import { auth, provider } from "./firebase";
+// import { auth, provider } from "./firebase";
+
+function useToken() {
+  const getToken = () => {
+    const tokenString = localStorage.getItem("token");
+    const userToken = JSON.parse(tokenString);
+    return userToken?.token;
+  };
+  const [token, setToken] = useState(getToken());
+
+  const saveToken = (userToken) => {
+    localStorage.setItem("token", JSON.stringify(userToken));
+    setToken(userToken.token);
+  };
+
+  return {
+    setToken: saveToken,
+    token,
+  };
+}
+
+// function setToken(userToken) {
+//   sessionStorage.setItem("token", JSON.stringify(userToken));
+// }
+
+// function getToken() {
+//   const tokenString = sessionStorage.getItem("token");
+//   const userToken = JSON.parse(tokenString);
+//   return userToken?.token;
+// }
 
 function App() {
-  const [user, setUser] = useState();
+  // const token = getToken();
+  const { token, setToken } = useToken();
   //   {
   //   displayName: "Test User",
   //   email: "test1@test.com",
@@ -20,25 +54,29 @@ function App() {
   //   photoUrl: "https://lh3.googleusercontent.com/proxy/_XVbri_0HrrbESGRS0qOvgOyiJXgqM0v-PN0XSvI7WwxKI9mh6i78WgDb5NHnC7cR67bvufQBZq7-tPDTZg0XSBTDEUD4rxm1K4pyJHSV6QnvvC6o7LuniW-Y8yn"
   // }
 
-  const handleLogin = () => {
-    if (!user) {
-      auth
-        .signInWithPopup(provider)
-        .then((result) => {
-          setUser(result.user);
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    } else if (user) {
-      auth
-        .signOut()
-        .then(() => {
-          setUser(null);
-        })
-        .catch((err) => alert(err.message));
-    }
-  };
+  if (!token) {
+    <Login setToken={setToken} />;
+  }
+
+  // const handleLogin = () => {
+  //   if (!token) {
+  //     auth
+  //       .signInWithPopup(provider)
+  //       .then((result) => {
+  //         setToken(result.user);
+  //       })
+  //       .catch((error) => {
+  //         alert(error.message);
+  //       });
+  //   } else if (token) {
+  //     auth
+  //       .signOut()
+  //       .then(() => {
+  //         setToken(null);
+  //       })
+  //       .catch((err) => alert(err.message));
+  //   }
+  // };
 
   return (
     <div className="app">

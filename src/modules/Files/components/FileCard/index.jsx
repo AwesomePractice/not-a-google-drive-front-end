@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import Icon from "../Icon";
 
-import { token } from "../../../../config";
+import * as token from "../../../../config";
 
 const FileCard = ({ name, id }) => {
   const handleClickDownload = (e) => {

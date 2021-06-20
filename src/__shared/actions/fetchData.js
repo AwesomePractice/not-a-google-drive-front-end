@@ -7,7 +7,7 @@ import {
   SHARED_FILES_LOAD_DATA_SUCCESS,
 } from "./actionTypes";
 
-import { token } from "../../config";
+import * as token from "../../config";
 
 export const fetchData = () => (dispatch) => {
   dispatch({ type: FILES_FETCH_DATA });
