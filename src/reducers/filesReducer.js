@@ -1,4 +1,4 @@
-import { FILES_LOAD_DATA_SUCCESS } from "../actions/actionTypes";
+import { FILES_LOAD_DATA_SUCCESS } from "../__shared/actions/actionTypes";
 
 const initialFiles = [];
 const filesReducer = (files = initialFiles, action) => {

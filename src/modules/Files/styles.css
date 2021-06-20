@@ -2,34 +2,3 @@
     width: 80%;
     margin: 50px 0 0 0;
 }
-
-.fileView_row{
-    height: 250px;
-    display: inline-grid;
-    justify-items: start;
-    align-items: center;
-    grid-template: "fileCard fileCard fileCard fileCard";
-    grid-gap: 5px;
-}
-
-.filesView__titles{
-    display: grid;
-    grid-template: "p p p" auto;
-    grid-template-columns: 70% 15% 15%;
-
-    margin-bottom: 5px;
-    color: rgb(85, 78, 78);
-}
-
-.filesView__lastmodified{
-    justify-self: center;
-    text-align: center;
-}
-.no-files{
-    height: 60%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    color: rgb(85, 78, 78, 0.5);
-}

@@ -1,0 +1,18 @@
+.no-files{
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: rgb(85, 78, 78, 0.5);
+}
+
+
+.filesView__titles{
+    display: grid;
+    grid-template: "p p p" auto;
+    grid-template-columns: 75% 10% 15%;
+
+    margin-bottom: 5px;
+    color: rgb(85, 78, 78);
+}

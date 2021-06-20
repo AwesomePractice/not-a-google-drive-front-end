@@ -31,16 +31,14 @@ const monthNames = [
   "Dec",
 ];
 
-const FileItem = ({
-  id,
-  caption,
-  timestamp,
-  size,
-  isFavorite,
-  icon,
-  handleChange,
-}) => {
-  const date = new Date(timestamp);
+const decapsulateDateFromId = (id) => {
+  const decapsulatedDate = parseInt(id.substring(0, 8), 16) * 1000;
+  // const date = new Date(decapsulatedDate);
+  return new Date(decapsulatedDate);
+};
+
+const FileItem = ({ id, caption, size, isFavorite, icon, handleChange }) => {
+  const date = decapsulateDateFromId(id);
   const fileDate = `${date.getDate()} ${
     monthNames[date.getMonth() + 1]
   } ${date.getFullYear()}`;
@@ -170,9 +168,9 @@ const FileItem = ({
 FileItem.propTypes = {
   id: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
-  timestamp: PropTypes.number.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  isFavorite: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+    .isRequired,
   icon: PropTypes.string.isRequired,
   handleChange: PropTypes.func,
 };

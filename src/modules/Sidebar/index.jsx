@@ -9,7 +9,7 @@ import SidebarItem from "./components/SidebarItem";
 import NewFile from "./components/NewFile";
 
 const index = () => (
-  <div className="sidebar">
+  <aside className="sidebar">
     <div className="sidebar_itemsContainer">
       <SidebarItem icon={<HomeIcon />} label="Home page" pageName="home" />
       <SidebarItem
@@ -29,7 +29,7 @@ const index = () => (
       />
     </div>
     <NewFile />
-  </div>
+  </aside>
 );
 
 export default index;

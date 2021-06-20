@@ -7,7 +7,7 @@ import {
 } from "./actionTypes";
 
 import token from "../../../config";
-import { fetchData } from "../../../actions/fetchData";
+import { fetchData } from "../../../__shared/actions/fetchData";
 
 export const deleteItem = (id, icon) => (dispatch) => {
   dispatch({ type: FILES_DELETE_FILE });
