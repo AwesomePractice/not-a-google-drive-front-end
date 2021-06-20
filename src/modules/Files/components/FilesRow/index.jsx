@@ -11,12 +11,13 @@ import { searchTree } from "../../../../__shared/functions";
 const FilesRow = () => {
   const page = useSelector((state) => state.page);
   const root = useSelector((state) => state.rootFolder);
+  const search = useSelector((state) => state.search);
   const initialRoot = useSelector((state) => state.files);
 
   useEffect(() => {}, [root]);
 
   const homeFiles_row = () => {
-    if (root) {
+    if (root && search === "") {
       const folder = searchTree(initialRoot, root.id);
       const currentFiles = folder?.files;
       if (currentFiles)

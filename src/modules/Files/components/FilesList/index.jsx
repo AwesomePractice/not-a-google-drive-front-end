@@ -1,6 +1,8 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-expressions */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -15,14 +17,56 @@ const noFiles = () => (
   </div>
 );
 
+const checkSearchResult = (id, array) => {
+  for (let i = 0; i < array.length; i++) if (array[i].id === id) return false;
+  return true;
+};
+
 const FileList = ({ route, setRoute }) => {
   const page = useSelector((state) => state.page);
   const initialRoot = useSelector((state) => state.files);
   const root = useSelector((state) => state.rootFolder);
   const sharedFiles = useSelector((state) => state.sharedFiles);
+  const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
+  const [searchResult, setSearchResult] = useState([]);
+
   useEffect(() => {}, [root, sharedFiles]);
+
+  const searchInRoot = (element) => {
+    element?.files?.forEach(
+      ({ name, id, favourite, encrypted, compressed }) => {
+        if (
+          name.toLowerCase().includes(search.toLowerCase()) &&
+          checkSearchResult(id, searchResult)
+        )
+          setSearchResult([
+            ...searchResult,
+            {
+              name,
+              id,
+              isFolder: false,
+              isEncrypted: encrypted,
+              isFavorite: favourite,
+              isCompressed: compressed,
+            },
+          ]);
+      }
+    );
+    element?.children?.forEach((folder) => searchInRoot(folder));
+  };
+
+  useEffect(() => {
+    setSearchResult(
+      searchResult.filter(({ name }) =>
+        name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+    searchInRoot(initialRoot);
+    console.log("search", searchResult);
+    if (search === "") setSearchResult([]);
+  }, [search]);
 
   useEffect(() => {
     if (page[0] === "-")
@@ -130,7 +174,6 @@ const FileList = ({ route, setRoute }) => {
         <FileItem
           id={id}
           caption={name}
-          timestamp={Date.now()}
           size={size}
           isFavorite={false}
           isEncrypted={encrypted}
@@ -142,6 +185,25 @@ const FileList = ({ route, setRoute }) => {
     }
     return noFiles;
   };
+
+  const searchResult_titles = () => {
+    if (searchResult?.length > 0) {
+      return searchResult.map(({ id, name, size, encrypted, compressed }) => (
+        <FileItem
+          id={id}
+          caption={name}
+          size={size}
+          isFavorite={false}
+          isEncrypted={encrypted}
+          isCompressed={compressed}
+          isFolder={false}
+          key={id}
+        />
+      ));
+    }
+    return noFiles;
+  };
+
   return (
     <>
       <div className="filesView__titles">
@@ -149,9 +211,10 @@ const FileList = ({ route, setRoute }) => {
         <p className="filesView__lastmodified">Created at</p>
         <p>File size</p>
       </div>
-      {page === "home" && homeFiles_titles()}
-      {page === "favorites" && favoriteFiles_titles()}
-      {page === "shared" && sharedFiles_titles()}
+      {page === "home" && search === "" && homeFiles_titles()}
+      {page === "favorites" && search === "" && favoriteFiles_titles()}
+      {page === "shared" && search === "" && sharedFiles_titles()}
+      {search !== "" && searchResult_titles()}
     </>
   );
 };
