@@ -19,7 +19,7 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-export default function Login({ setToken }) {
+export default function LoginView({ setToken }) {
   const [login, setLogin] = useState();
   const [password, setPassword] = useState();
   const [role, setRole] = useState("string");
@@ -64,6 +64,6 @@ export default function Login({ setToken }) {
   );
 }
 
-Login.propTypes = {
+LoginView.propTypes = {
   setToken: PropTypes.func.isRequired,
 };
