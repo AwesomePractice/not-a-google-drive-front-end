@@ -24,8 +24,8 @@ button{
     display: grid;
     justify-items: start;
     align-items: center;
-    grid-template: "fileItem__icon fileItem_star fileItem__name fileItem_encrypted fileItem__date fileItem__size fileItem__delete" auto;
-    grid-template-columns: 5% 5% 55% 10% 10% 10% 5%;
+    grid-template: "fileItem__icon fileItem_star fileItem__name fileItem_encrypted fileItem__date fileItem__size fileItem__button fileItem__button" auto;
+    grid-template-columns: 5% 5% 56% 10% 10% 8% 3% 3%;
 }
 
 .fileItem .MuiSvgIcon-root{
@@ -42,8 +42,12 @@ button{
 
 .MuiSvgIcon-root.fileItem__star--disactive:hover, 
 .MuiSvgIcon-root.fileItem__star--active:hover, 
-.fileItem__delete>.MuiSvgIcon-root:hover{
+.fileItem__button>.MuiSvgIcon-root:hover{
     color: #0492c2;
+}
+
+.fileItem__star--disable{
+    visibility: hidden;
 }
 
 .fileItem__name{

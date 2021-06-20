@@ -189,7 +189,7 @@ const FileList = ({ route, setRoute }) => {
             />
           ))
           .concat(
-            favoriteFolders.map((id) => {
+            folders?.map((id) => {
               const folder = searchTree(initialRoot, id);
               return (
                 <FileItem
@@ -223,6 +223,7 @@ const FileList = ({ route, setRoute }) => {
           isCompressed={compressed}
           isFolder={false}
           key={id}
+          shared
         />
       ));
     }
