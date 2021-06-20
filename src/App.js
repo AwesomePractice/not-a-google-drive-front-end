@@ -16,12 +16,6 @@ import Signup from "./Views/Signup/signup";
 
 import { getToken } from "./__shared/functions";
 
-// const getToken = () => {
-//   const tokenString = localStorage.getItem("token");
-//   const userToken = JSON.parse(tokenString);
-//   return userToken?.token;
-// };
-
 function App() {
   const [token, setToken] = useState(getToken());
 
