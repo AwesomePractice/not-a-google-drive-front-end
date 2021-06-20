@@ -145,38 +145,37 @@ const FileList = ({ route, setRoute }) => {
       const currentFiles = folder?.files;
       const currentFolders = folder?.children;
 
-      if (currentFiles?.length === 0 && currentFolders?.length === 0)
-        return noFiles;
-
-      return currentFiles
-        ?.map(({ id, name, size, favourite, encrypted, compressed }) => (
-          <FileItem
-            id={id}
-            caption={name}
-            size={size}
-            isFavorite={favourite}
-            isEncrypted={encrypted}
-            isCompressed={compressed}
-            isFolder={false}
-            key={id}
-          />
-        ))
-        .concat(
-          currentFolders?.map(({ id, name, favourite }) => (
+      if (currentFiles?.length > 0 || currentFolders?.length > 0)
+        return currentFiles
+          ?.map(({ id, name, size, favourite, encrypted, compressed }) => (
             <FileItem
               id={id}
               caption={name}
-              size="-"
+              size={size}
               isFavorite={favourite}
-              isFolder
-              handleChange={handleChange}
+              isEncrypted={encrypted}
+              isCompressed={compressed}
+              isFolder={false}
               key={id}
             />
           ))
-        );
+          .concat(
+            currentFolders?.map(({ id, name, favourite }) => (
+              <FileItem
+                id={id}
+                caption={name}
+                size="-"
+                isFavorite={favourite}
+                isFolder
+                handleChange={handleChange}
+                key={id}
+              />
+            ))
+          );
+      return noFiles();
     }
 
-    return noFiles;
+    return noFiles();
   };
 
   const favoriteFiles_titles = () => {
@@ -218,9 +217,9 @@ const FileList = ({ route, setRoute }) => {
               );
             })
           );
-      return noFiles;
+      return noFiles();
     }
-    return noFiles;
+    return noFiles();
   };
 
   const sharedFiles_titles = () => {
@@ -239,7 +238,7 @@ const FileList = ({ route, setRoute }) => {
         />
       ));
     }
-    return noFiles;
+    return noFiles();
   };
 
   const searchResult_titles = () => {
@@ -261,7 +260,7 @@ const FileList = ({ route, setRoute }) => {
         )
       );
     }
-    return noFiles;
+    return noFiles();
   };
 
   return (
