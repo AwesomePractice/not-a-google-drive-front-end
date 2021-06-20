@@ -8,13 +8,18 @@ import "./styles.css";
 const url = "http://34.105.195.56";
 
 async function signupUser(credentials) {
-  return fetch(`${url}/User/SignUp`, {
+  console.log("credentials", credentials);
+  const response = await fetch(`${url}/User/SignUp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then((data) => data.json());
+  });
+  if (response === 401 || response === 403) {
+    localStorage.removeItem("token");
+  }
+  return response.json();
 }
 
 export default function Signup({ setToken }) {
