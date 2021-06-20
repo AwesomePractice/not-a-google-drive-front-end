@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-plusplus */
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
@@ -10,6 +11,7 @@ import { searchTree } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
 import "./styles.css";
+import token from "../../../../config";
 
 const noFiles = () => (
   <div className="no-files">
@@ -31,7 +33,8 @@ const FileList = ({ route, setRoute }) => {
   const dispatch = useDispatch();
 
   const [searchResult, setSearchResult] = useState([]);
-
+  const [favoriteFiles, setFavoriteFiles] = useState([]);
+  const [favoriteFolders, setFavoriteFolders] = useState([]);
   useEffect(() => {}, [root, sharedFiles]);
 
   const searchInRoot = (element) => {
@@ -66,7 +69,7 @@ const FileList = ({ route, setRoute }) => {
     searchInRoot(initialRoot);
     console.log("search", searchResult);
     if (search === "") setSearchResult([]);
-  }, [search]);
+  }, [search, initialRoot]);
 
   useEffect(() => {
     if (page[0] === "-")
@@ -81,6 +84,30 @@ const FileList = ({ route, setRoute }) => {
       dispatch({
         type: "rootFolder/setRoot",
         payload: folder || initialRoot,
+      });
+
+      fetch("http://34.105.195.56/FileUploader/AllFavouriteFiles", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        response.json().then((data) => {
+          setFavoriteFiles(data);
+          console.log(favoriteFiles);
+        });
+      });
+
+      fetch("http://34.105.195.56/Folder/AllFavouriteFolders", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        response.json().then((data) => {
+          setFavoriteFolders(data);
+          console.log(favoriteFolders);
+        });
       });
     }
   }, [initialRoot]);
@@ -145,12 +172,9 @@ const FileList = ({ route, setRoute }) => {
 
   const favoriteFiles_titles = () => {
     if (root) {
-      const favoriteFiles = initialRoot.files.filter(
-        (item) => item.favourite === true
-      );
-      if (favoriteFiles.length > 0)
-        return favoriteFiles.map(
-          ({ id, name, size, favourite, encrypted, compressed }) => (
+      if (favoriteFiles?.length > 0 || favoriteFolders?.length > 0)
+        return favoriteFiles
+          .map(({ id, name, size, favourite, encrypted, compressed }) => (
             <FileItem
               id={id}
               caption={name}
@@ -161,8 +185,25 @@ const FileList = ({ route, setRoute }) => {
               isFolder={false}
               key={id}
             />
-          )
-        );
+          ))
+          .concat(
+            favoriteFolders.map((id) => {
+              const folder = searchTree(initialRoot, id);
+              return (
+                <FileItem
+                  id={id}
+                  caption={folder.name}
+                  size="-"
+                  isFavorite={folder.favourite}
+                  isEncrypted={folder.encrypted}
+                  isCompressed={folder.compressed}
+                  isFolder
+                  handleChange={handleChange}
+                  key={id}
+                />
+              );
+            })
+          );
       return noFiles;
     }
     return noFiles;
