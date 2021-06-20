@@ -11,6 +11,7 @@ import { searchTree } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
 import "./styles.css";
+import { SEACRH_SET_SEARCH } from "../../../Header/actions/actionTypes";
 import { token } from "../../../../config";
 
 const noFiles = () => (
@@ -18,11 +19,6 @@ const noFiles = () => (
     <p>No files</p>
   </div>
 );
-
-const checkSearchResult = (id, array) => {
-  for (let i = 0; i < array.length; i++) if (array[i].id === id) return false;
-  return true;
-};
 
 const FileList = ({ route, setRoute }) => {
   const page = useSelector((state) => state.page);
@@ -35,38 +31,50 @@ const FileList = ({ route, setRoute }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [favoriteFiles, setFavoriteFiles] = useState([]);
   const [favoriteFolders, setFavoriteFolders] = useState([]);
+  const [allFiles, setAllFiles] = useState([]);
+  const [allFolders, setAllFolders] = useState([]);
+
   useEffect(() => {}, [root, sharedFiles]);
 
-  const searchInRoot = (element) => {
-    element?.files?.forEach(
-      ({ name, id, favourite, encrypted, compressed }) => {
-        if (
-          name.toLowerCase().includes(search.toLowerCase()) &&
-          checkSearchResult(id, searchResult)
-        )
-          setSearchResult([
-            ...searchResult,
-            {
-              name,
-              id,
-              isFolder: false,
-              isEncrypted: encrypted,
-              isFavorite: favourite,
-              isCompressed: compressed,
-            },
-          ]);
-      }
-    );
-    element?.children?.forEach((folder) => searchInRoot(folder));
-  };
+  useEffect(() => {
+    fetch("http://34.105.195.56/FileUploader/AllMyFiles", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      if (response.ok) response.json().then((data) => setAllFiles(data));
+    });
+
+    fetch("http://34.105.195.56/Folder/AllMyFolders", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      if (response.ok) response.json().then((data) => setAllFolders(data));
+    });
+  }, []);
 
   useEffect(() => {
     setSearchResult(
-      searchResult.filter(({ name }) =>
-        name.toLowerCase().includes(search.toLowerCase())
-      )
+      allFiles
+        ?.map((item) => ({ ...item, isFolder: false }))
+        .filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
+        .concat(
+          allFolders
+            ?.map((item) => ({
+              ...item,
+              isFolder: true,
+              encrypted: false,
+              compressed: false,
+              size: "-",
+            }))
+            .filter(({ name }) =>
+              name.toLowerCase().includes(search.toLowerCase())
+            )
+        )
     );
-    searchInRoot(initialRoot);
     if (search === "") setSearchResult([]);
   }, [search]);
 
@@ -91,9 +99,10 @@ const FileList = ({ route, setRoute }) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        response.json().then((data) => {
-          setFavoriteFiles(data);
-        });
+        if (response.ok)
+          response.json().then((data) => {
+            setFavoriteFiles(data);
+          });
       });
 
       fetch("http://34.105.195.56/Folder/AllFavouriteFolders", {
@@ -110,6 +119,7 @@ const FileList = ({ route, setRoute }) => {
   }, [initialRoot]);
 
   const handleChange = (folderId) => {
+    dispatch({ type: SEACRH_SET_SEARCH, payload: "" });
     if (folderId === "") {
       setRoute([{ name: page, id: "" }]);
       dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
@@ -217,7 +227,7 @@ const FileList = ({ route, setRoute }) => {
         <FileItem
           id={id}
           caption={name}
-          size={size}
+          size={size || "-"}
           isFavorite={false}
           isEncrypted={encrypted}
           isCompressed={compressed}
@@ -232,18 +242,22 @@ const FileList = ({ route, setRoute }) => {
 
   const searchResult_titles = () => {
     if (searchResult?.length > 0) {
-      return searchResult.map(({ id, name, size, encrypted, compressed }) => (
-        <FileItem
-          id={id}
-          caption={name}
-          size={size}
-          isFavorite={false}
-          isEncrypted={encrypted}
-          isCompressed={compressed}
-          isFolder={false}
-          key={id}
-        />
-      ));
+      return searchResult.map(
+        ({ id, name, size, encrypted, compressed, isFolder }) => (
+          <FileItem
+            id={id}
+            caption={name}
+            size={size}
+            isFavorite={false}
+            isEncrypted={encrypted}
+            isCompressed={compressed}
+            isFolder={isFolder}
+            key={id}
+            shared
+            handleChange={isFolder ? handleChange : null}
+          />
+        )
+      );
     }
     return noFiles;
   };
