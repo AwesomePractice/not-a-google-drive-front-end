@@ -16,7 +16,7 @@ import { manageFavorite } from "../../actions/manageFavorite";
 import { deleteItem } from "../../actions/deleteItem";
 import Icon from "../Icon";
 
-import * as token from "../../../../config";
+import { token } from "../../../../config";
 
 const monthNames = [
   "Jan",
