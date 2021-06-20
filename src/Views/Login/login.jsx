@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
 import logo from "../../media/logo.png";
@@ -23,8 +24,6 @@ export default function Login({ setToken }) {
   const [password, setPassword] = useState();
   const [role, setRole] = useState("string");
 
-  // useEffect(() => {}, [login, password]);
-
   const handleSubmit = async (e) => {
     setRole("string");
     e.preventDefault();
@@ -41,7 +40,7 @@ export default function Login({ setToken }) {
       <img src={logo} alt="NotAGoogleDrive" className="login__logo" />
       <h1 className="login__header">Log in to NotAGoogleDrive</h1>
       <form onSubmit={handleSubmit} className="login_form">
-        <label className="login__useranem">
+        <label className="login__username">
           <p>Username</p>
           <input type="text" onChange={(e) => setLogin(e.target.value)} />
         </label>
@@ -58,6 +57,9 @@ export default function Login({ setToken }) {
           </button>
         </div>
       </form>
+      <Link to="/Signup" className="login__signup">
+        Dont have an accout? Sign up!
+      </Link>
     </div>
   );
 }

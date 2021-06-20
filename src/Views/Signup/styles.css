@@ -4,9 +4,50 @@
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .signup_form {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup__header{
+    color: #0492c2;
+    margin-bottom: 30px;
+}
+
+.signup__field p{
+    text-align: center;
+}
+
+.signup__field{
+    margin-bottom: 5px;
+}
+
+.signup__field--last{
+    margin-bottom: 20px;
+}
+
+.signup__submit{
+    width: 100px;
+    height: 30px;
+    background-color: #0492c2;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.signup__submit:hover{
+    transform: scale(1.1);
+    transition: transform .5s ease-in-out;
+}
+
+.signup__login{
+    color: #0492c2;
 }
