@@ -7,12 +7,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
-import { searchTree } from "../../../../__shared/functions";
+import { searchTree, getToken } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
 import "./styles.css";
 import { SEACRH_SET_SEARCH } from "../../../Header/actions/actionTypes";
-import { token } from "../../../../config";
 
 const noFiles = () => (
   <div className="no-files">
@@ -33,6 +32,8 @@ const FileList = ({ route, setRoute }) => {
   const [favoriteFolders, setFavoriteFolders] = useState([]);
   const [allFiles, setAllFiles] = useState([]);
   const [allFolders, setAllFolders] = useState([]);
+
+  const token = getToken();
 
   useEffect(() => {}, [root, sharedFiles]);
 

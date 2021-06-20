@@ -1,3 +1,4 @@
+/* eslint-disable import/no-useless-path-segments */
 /* eslint-disable no-undef */
 /* eslint-disable import/prefer-default-export */
 import {
@@ -7,12 +8,15 @@ import {
   SHARED_FILES_LOAD_DATA_SUCCESS,
 } from "./actionTypes";
 
-import * as token from "../../config";
+import { getToken } from "../../__shared/functions";
 
 export const fetchData = () => (dispatch) => {
   dispatch({ type: FILES_FETCH_DATA });
 
   const url = "http://34.105.195.56/User/FilesInfo";
+  const token = getToken();
+  // console.log("fetch", localStorage);
+  // console.log(token);
 
   fetch(url, {
     method: "GET",
