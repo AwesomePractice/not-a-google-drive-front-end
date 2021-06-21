@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import "./styles.css";
+import "./styles.scss";
 
 const url = "http://34.105.195.56";
 

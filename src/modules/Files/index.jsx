@@ -9,8 +9,8 @@ import Path from "./components/Path";
 import FilesRow from "./components/FilesRow";
 import FileList from "./components/FilesList";
 
-import "./styles.css";
-import "../../main.css";
+import "./styles.scss";
+import "../../main.scss";
 
 function searchTree(element, matchingId) {
   if (element.id === matchingId) {

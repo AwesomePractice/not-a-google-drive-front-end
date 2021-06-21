@@ -1,5 +1,6 @@
-import "./styles.css";
 import PropTypes from "prop-types";
+
+import "./styles.scss";
 
 const Path = ({ path, handleChange }) => (
   <div className="path--container">

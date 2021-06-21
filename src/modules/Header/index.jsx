@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
 import React, { useEffect } from "react";
-import "./styles.css";
+import "./styles.scss";
 import { useSelector, useDispatch } from "react-redux";
 
 import SearchIcon from "@material-ui/icons/Search";

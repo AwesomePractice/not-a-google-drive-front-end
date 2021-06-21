@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import FileCard from "../FileCard";
 
-import "./styles.css";
+import "./styles.scss";
 import { searchTree } from "../../../../__shared/functions";
 
 const FilesRow = () => {

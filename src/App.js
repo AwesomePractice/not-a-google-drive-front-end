@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
-import "./App.css";
+import "./App.scss";
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,

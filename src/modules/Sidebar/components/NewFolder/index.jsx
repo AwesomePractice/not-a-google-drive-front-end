@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./styles.css";
+import "./styles.scss";
 
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";

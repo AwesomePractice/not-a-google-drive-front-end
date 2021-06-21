@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
 import React from "react";
-import "./styles.css";
+import "./styles.scss";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 

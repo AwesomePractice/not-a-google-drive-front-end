@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import "./styles.css";
+import "./styles.scss";
 import logo from "../../media/logo.png";
 
 const url = "http://34.105.195.56";

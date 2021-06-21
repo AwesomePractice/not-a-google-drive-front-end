@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { searchTree, getToken } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
-import "./styles.css";
+import "./styles.scss";
 import { SEACRH_SET_SEARCH } from "../../../Header/actions/actionTypes";
 
 const noFiles = () => (
