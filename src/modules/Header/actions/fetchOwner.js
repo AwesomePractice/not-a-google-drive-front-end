@@ -21,22 +21,21 @@ export const fetchOwner = () => (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => {
-      if (response === 401 || response === 403) {
+    .then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          Promise.all([dispatch(fetchOwnerInfo(data[0].owner_id))]);
+          return dispatch({
+            type: OWNER_LOAD_OWNER_SUCCESS,
+            payload: data[0].owner_id,
+          });
+        });
+      } else if (response === 401 || response === 403) {
         localStorage.removeItem("token");
         window.location.reload();
-      } else if (!response.ok) {
-        catchError(response);
       } else {
-        res.json();
+        catchError(response);
       }
-    })
-    .then((data) => {
-      dispatch(fetchOwnerInfo(data[0].owner_id));
-      return dispatch({
-        type: OWNER_LOAD_OWNER_SUCCESS,
-        payload: data[0].owner_id,
-      });
     })
     .catch((err) => dispatch({ type: OWNER_LOAD_OWNER_FAIL, payload: err }));
 };

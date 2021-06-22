@@ -72,7 +72,7 @@ const Files = () => {
   const handleRouteChange = (newRoute) => setRoute(newRoute);
 
   return (
-    <div className="files">
+    <div className="files container">
       <Path path={route} handleChange={handleChange} />
       <FilesRow page={page} />
       <FileList route={route} setRoute={handleRouteChange} />

@@ -24,22 +24,21 @@ export const fetchOwnerInfo = (id) => (dispatch) => {
       id,
     }),
   })
-    .then((res) => {
+    .then((response) => {
       if (response === 401 || response === 403) {
         localStorage.removeItem("token");
         window.location.reload();
       } else if (!response.ok) {
         catchError(response);
       } else {
-        res.json();
+        response.json().then((data) =>
+          dispatch({
+            type: OWNER_LOAD_OWNER_INFO_SUCCESS,
+            payload: { name: data.FirstName, surname: data.LastName },
+          })
+        );
       }
     })
-    .then((data) =>
-      dispatch({
-        type: OWNER_LOAD_OWNER_INFO_SUCCESS,
-        payload: { name: data.FirstName, surname: data.LastName },
-      })
-    )
     .catch((err) =>
       dispatch({ type: OWNER_LOAD_OWNER_INFO_FAIL, payload: err })
     );
