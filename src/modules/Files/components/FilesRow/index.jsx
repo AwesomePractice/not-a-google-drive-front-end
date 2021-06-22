@@ -22,7 +22,7 @@ const FilesRow = () => {
       const currentFiles = folder?.files;
       if (currentFiles)
         return currentFiles
-          .slice(0, 4)
+          .slice(0, 5)
           .map(({ name, id }) => <FileCard name={name} key={id} id={id} />);
     }
 
@@ -31,7 +31,10 @@ const FilesRow = () => {
   return (
     <>
       {page === "home" && homeFiles_row()?.length > 0 && (
-        <div className="fileView_row">{homeFiles_row()}</div>
+        <>
+          <p className="files__title">Recent Files</p>
+          <div className="files__row">{homeFiles_row()}</div>
+        </>
       )}
     </>
   );

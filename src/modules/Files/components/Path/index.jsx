@@ -5,7 +5,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import "./styles.scss";
 
 const Path = ({ path, handleChange }) => (
-  <div className="path--container">
+  <div className="path--container container">
     <p className="path">
       {path.map((item) => (
         <PathItem item={item} handleChange={handleChange} key={item.name} />

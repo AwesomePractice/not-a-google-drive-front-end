@@ -33,13 +33,8 @@ const FileCard = ({ name, id }) => {
 
   return (
     <button type="button" className="fileCard" onClick={handleClickDownload}>
-      <div className="fileCard--top">
-        <Icon name={name} isFolder={false} />
-      </div>
-
-      <div className="fileCard--bottom">
-        <p>{name}</p>
-      </div>
+      <Icon name={name} isFolder={false} />
+      <p>{name}</p>
     </button>
   );
 };
