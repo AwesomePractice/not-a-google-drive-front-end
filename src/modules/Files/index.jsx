@@ -41,7 +41,7 @@ const Files = () => {
     Promise.all([dispatch(fetchData())]);
 
     dispatch(setRoot(initialRoot));
-  }, [dispatch, initialRoot]);
+  }, []);
 
   useEffect(() => {}, [root]);
 
