@@ -1,0 +1,69 @@
+@import "../../../../__shared/styles/vars.scss";
+
+.sidebarItem{
+    background: none;
+    border: none;
+    color: $text-secondary;
+    width: 100%;
+    
+    display: flex;
+    padding: 10px 40px 10px 0;
+    position: relative;
+    z-index: 1;
+
+    &:hover{
+        cursor: pointer;
+    }
+    
+    &:hover::after{
+        content: '';
+        width: calc(100% + 50px);
+        height: 100%;
+        background-color: $backgroud-secondary-color-hover;
+
+        position: absolute;
+        top: 0;
+        left: -50px;
+        z-index: -1;
+    }
+
+    .selected{
+        font-weight: 600;
+        color: $primary-color-accent;
+    
+        & .MuiSvgIcon-root {
+            color: $primary-color-accent;
+        }
+
+        &::before{
+            content: '';
+            height: 100%;
+            width: 5px;
+            background-color: $primary-color-accent;
+            border-radius: 0 5px 5px 0;
+
+            position: absolute;
+            top: 0;
+            left: -50px;
+            z-index: 1;
+        }
+    }
+        
+
+    .sidebarItem--container{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        p {
+            margin: 0 0 0 12px;
+            text-align: left;
+        }
+
+        svg {
+            transform: translateY(-7%);
+        }
+        
+    }
+
+}

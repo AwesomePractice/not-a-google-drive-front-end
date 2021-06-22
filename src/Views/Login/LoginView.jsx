@@ -3,19 +3,25 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import "./styles.css";
+import "./styles.scss";
 import logo from "../../media/logo.png";
 
 const url = "http://34.105.195.56";
 
 async function loginUser(credentials) {
-  return fetch(`${url}/User/SignIn`, {
+  console.log("credentials", credentials);
+  const response = await fetch(`${url}/User/SignIn`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then((data) => data.json());
+  });
+  if (response === 401 || response === 403) {
+    localStorage.removeItem("token");
+  }
+  window.location.reload();
+  return response.json();
 }
 
 export default function LoginView({ setToken }) {

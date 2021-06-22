@@ -1,0 +1,27 @@
+@import "../../../../__shared/styles/vars.scss";
+
+.newFolder--container {
+    border: 2px solid $primary-color;
+    color: #0492c2;
+}
+
+
+.newFolder__submit{
+    width: 100px;
+    height: 30px;
+    background-color: $primary-color;
+    color: $text-white;
+    border-radius: 10px;
+
+    &:hover{
+        background-color: $primary-color-hover;
+        transform: scale(1.1);
+        transition: transform .5s ease-in-out;
+    }
+}
+
+.modal__close{
+    margin-left: auto;
+    cursor: pointer;
+    color: $text-primary;
+}

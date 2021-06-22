@@ -9,7 +9,7 @@ import {
   AiFillFolder,
 } from "react-icons/ai";
 
-import "./styles.css";
+import "./styles.scss";
 
 const Icon = ({ isFolder, name, isCompressed }) => {
   const splt = name.split(".");

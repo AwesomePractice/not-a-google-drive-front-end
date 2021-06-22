@@ -1,0 +1,88 @@
+@import "../../__shared/styles/vars.scss";
+
+.header {
+    background-color: $backgroud-primary-color;
+    color: $text-primary;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+    z-index: 1;
+
+    &__user{
+        font-size: $font-size-h1;
+        margin-right: 40px;
+
+        display: inline-block;
+    }
+
+    &__user--accent{
+        font-weight: 700;
+        color: $text-accent;
+    }
+
+    &__searchbar--container {
+        width: 70%;
+        height: 40px;
+    }
+
+    &__searchbar {
+        width: 100%;
+        min-width: 220px;
+        height: 100%;
+        border-radius: 6px;
+        background-color: $secondary-color;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+
+        input{
+            background: transparent;
+            border: none;
+            width: 95%;
+
+            flex: 1;
+            font-size: $font-size-h3;
+            color: #fff;
+            background: none;
+            border: none;
+            margin-left: 12px;
+
+            &:focus{
+                outline: none;
+            }
+
+            &::placeholder{
+                color: rgba($color: $text-white, $alpha: .6)
+            }
+            
+        }
+
+        & .MuiSvgIcon-root{
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+    &__logout{
+        width: 90px;
+        height: 40px;
+        border: 3px solid $primary-color;
+        border-radius: 10px;
+        color: $primary-color;
+        font-size: $font-size-h3;
+        font-weight: 600;
+
+        &:hover{
+            background-color: $primary-color;
+            color: $text-white;
+        }
+    }
+
+}

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import "./styles.css";
+import "./styles.scss";
 
 const url = "http://34.105.195.56";
 
@@ -23,6 +23,9 @@ export default function SignupView() {
       },
       body: JSON.stringify(credentials),
     }).then((response) => {
+      if (response === 401 || response === 403) {
+        localStorage.removeItem("token");
+      }
       if (response.ok)
         response.text().then((text) => {
           setUser(true);
@@ -33,6 +36,7 @@ export default function SignupView() {
           alert(text);
         });
       }
+      window.location.reload();
     });
   };
 

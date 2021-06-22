@@ -1,0 +1,19 @@
+@import "../../../../__shared/styles/vars.scss";
+
+.files{
+    &__title{
+        margin: 5px 0 15px 0;
+        font-size: $font-size-h2;
+        color: $text-primary;
+    }
+    &__row{
+    height: 200px;
+    display: inline-grid;
+    justify-items: start;
+    align-items: stretch;
+    grid-template: "fileCard fileCard fileCard fileCard fileCard";
+    grid-gap: 15px;
+
+    margin: 0 0 25px 0;
+    }
+}

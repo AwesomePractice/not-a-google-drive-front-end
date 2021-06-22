@@ -3,11 +3,12 @@
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./styles.css";
+import "./styles.scss";
 
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
@@ -15,7 +16,7 @@ function getModalStyle() {
   return {
     top: `50%`,
     left: `50%`,
-    height: `30%`,
+    height: `35%`,
     display: `flex`,
     alignItems: `center`,
     justifyContent: `center`,
@@ -52,6 +53,14 @@ const NewFile = () => {
     setEncrypted(false);
     setCompressed(false);
   }, [open]);
+
+  function status(response) {
+    if (response === 401 || response === 403) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    return response;
+  }
 
   const handleChangeEncrypted = (e) => {
     setEncrypted(e.target.checked);
@@ -91,7 +100,9 @@ const NewFile = () => {
           },
           body,
         }
-      ).then(() => Promise.all([dispatch(fetchData())]));
+      )
+        .then(status)
+        .then(() => Promise.all([dispatch(fetchData())]));
 
     setUploading(false);
     setOpen(false);
@@ -99,10 +110,13 @@ const NewFile = () => {
   };
 
   return (
-    <div className="newFile">
-      <div className="newFile__container" onClick={handleOpen}>
-        <AddIcon />
+    <button className="newFile sidebar__button" type="button">
+      <div
+        className="newFile--container sidebar__button--container"
+        onClick={handleOpen}
+      >
         <p>New file</p>
+        <AddIcon />
       </div>
 
       <Modal
@@ -112,6 +126,7 @@ const NewFile = () => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
+          <AiFillCloseCircle className="modal__close" onClick={handleClose} />
           <p style={{ marginBottom: "20px" }}>
             Select files you want to upload:
           </p>
@@ -154,7 +169,7 @@ const NewFile = () => {
           )}
         </div>
       </Modal>
-    </div>
+    </button>
   );
 };
 

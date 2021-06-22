@@ -1,0 +1,29 @@
+@import "../../../../__shared/styles/vars.scss";
+
+.no-files{
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: rgba(85, 78, 78, 0.5);
+}
+
+
+.filesView__titles{
+    display: grid;
+    grid-template: "button button button" auto;
+    grid-template-columns: 74% 9.5% 16.5%;
+    // grid-template-columns: 4% 4% 56% 10% 10% 8% 4% 4%;
+
+    margin-bottom: 5px;
+    font-size: $font-size-p;
+
+    button {
+        margin: 25px 0 10px 0;
+        display: flex;
+        justify-content: start;
+
+        color: $text-secondary;
+    }
+}

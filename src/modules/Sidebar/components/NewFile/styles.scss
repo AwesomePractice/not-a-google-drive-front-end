@@ -1,0 +1,37 @@
+@import "../../../../__shared/styles/vars.scss";
+
+.newFile--container {
+    background-color: $primary-color;
+    color: $text-white;
+    margin-top: 15x;
+}
+
+.modal{
+    &__checkbox--contanier{
+        display: flex;
+        align-items: center;
+
+        margin-bottom: 30px;
+    }
+
+    &__checkbox{
+        margin-right: 10px;
+    }
+
+    &__upload{
+        width: 100px;
+        height: 30px;
+        background-color: $primary-color;
+        color: $text-white;
+        border-radius: 10px;
+    }
+
+    &__close{
+        margin-left: auto;
+        cursor: pointer;
+        color: $text-primary;
+    
+        height: 25px;
+        width: 25px;
+    }
+}

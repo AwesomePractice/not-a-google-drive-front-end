@@ -1,8 +1,11 @@
-import "./styles.css";
 import PropTypes from "prop-types";
 
+import { MdKeyboardArrowRight } from "react-icons/md";
+
+import "./styles.scss";
+
 const Path = ({ path, handleChange }) => (
-  <div className="path--container">
+  <div className="path--container container">
     <p className="path">
       {path.map((item) => (
         <PathItem item={item} handleChange={handleChange} key={item.name} />
@@ -18,7 +21,8 @@ const PathItem = ({ item, handleChange }) => {
   };
   return (
     <button type="button" onClick={handleClick} className="path__button">
-      {`${item.name.toUpperCase()} /`}
+      {item.name.toUpperCase()}
+      <MdKeyboardArrowRight />
     </button>
   );
 };

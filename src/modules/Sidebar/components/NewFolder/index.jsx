@@ -3,11 +3,12 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./styles.css";
+import "./styles.scss";
 
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
@@ -46,6 +47,14 @@ const NewFolder = () => {
   const dispatch = useDispatch();
   const folder = useSelector((state) => state.rootFolder);
 
+  function status(response) {
+    if (response === 401 || response === 403) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    return response;
+  }
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -72,17 +81,21 @@ const NewFolder = () => {
         name,
         isFavourite: false,
       }),
-    }).then(() => Promise.all([dispatch(fetchData())]));
-
+    })
+      .then(status)
+      .then(() => Promise.all([dispatch(fetchData())]));
     setOpen(false);
     setName("");
   };
 
   return (
-    <div className="newFolder">
-      <div className="newFolder__container" onClick={handleOpen}>
-        <AddIcon />
+    <button className="newFolder sidebar__button" type="button">
+      <div
+        className="newFolder--container sidebar__button--container"
+        onClick={handleOpen}
+      >
         <p>New Folder</p>
+        <AddIcon />
       </div>
 
       <Modal
@@ -92,6 +105,7 @@ const NewFolder = () => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
+          <AiFillCloseCircle className="modal__close" onClick={handleClose} />
           <p style={{ marginBottom: "20px" }}>Text a name</p>
           <input
             type="text"
@@ -110,7 +124,7 @@ const NewFolder = () => {
           </button>
         </div>
       </Modal>
-    </div>
+    </button>
   );
 };
 

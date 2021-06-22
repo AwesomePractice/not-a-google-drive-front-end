@@ -3,14 +3,14 @@
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-expressions */
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import { searchTree, getToken } from "../../../../__shared/functions";
 import FileItem from "../FileItem";
 
-import "./styles.css";
+import "./styles.scss";
 import { SEACRH_SET_SEARCH } from "../../../Header/actions/actionTypes";
 
 const noFiles = () => (
@@ -32,29 +32,36 @@ const FileList = ({ route, setRoute }) => {
   const [favoriteFolders, setFavoriteFolders] = useState([]);
   const [allFiles, setAllFiles] = useState([]);
   const [allFolders, setAllFolders] = useState([]);
+  const [sort, setSort] = useState("");
 
   const token = getToken();
 
   useEffect(() => {}, [root, sharedFiles]);
 
-  useEffect(() => {
-    fetch("http://34.105.195.56/FileUploader/AllMyFiles", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      if (response.ok) response.json().then((data) => setAllFiles(data));
-    });
+  useEffect(() => {}, [sort]);
 
-    fetch("http://34.105.195.56/Folder/AllMyFolders", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      if (response.ok) response.json().then((data) => setAllFolders(data));
-    });
+  useEffect(() => {
+    Promise.all([
+      fetch("http://34.105.195.56/FileUploader/AllMyFiles", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        if (response.ok) response.json().then((data) => setAllFiles(data));
+        else localStorage.removeItem("token");
+      }),
+
+      fetch("http://34.105.195.56/Folder/AllMyFolders", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        if (response.ok) response.json().then((data) => setAllFolders(data));
+        else localStorage.removeItem("token");
+      }),
+    ]);
   }, [initialRoot]);
 
   useEffect(() => {
@@ -101,10 +108,14 @@ const FileList = ({ route, setRoute }) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        if (response.ok)
+        if (response !== 401 && response !== 403)
           response.json().then((data) => {
             setFavoriteFiles(data);
           });
+        else {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }
       });
 
       fetch("http://34.105.195.56/Folder/AllFavouriteFolders", {
@@ -113,9 +124,14 @@ const FileList = ({ route, setRoute }) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        response.json().then((data) => {
-          setFavoriteFolders(data);
-        });
+        if (response !== 401 && response !== 403)
+          response.json().then((data) => {
+            setFavoriteFolders(data);
+          });
+        else {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }
       });
     }
   }, [initialRoot]);
@@ -139,6 +155,22 @@ const FileList = ({ route, setRoute }) => {
     }
   };
 
+  const compare = (a, b) => {
+    switch (sort) {
+      case "name":
+        return a.name > b.name;
+      case "size":
+        return a.size > b.size;
+      case "date": {
+        const aDate = new Date(parseInt(a.id.substring(0, 8), 16) * 1000);
+        const bDate = new Date(parseInt(b.id.substring(0, 8), 16) * 1000);
+        return aDate > bDate;
+      }
+      default:
+        return true;
+    }
+  };
+
   const homeFiles_titles = () => {
     if (root) {
       const folder = searchTree(initialRoot, root.id);
@@ -147,6 +179,7 @@ const FileList = ({ route, setRoute }) => {
 
       if (currentFiles?.length > 0 || currentFolders?.length > 0)
         return currentFiles
+          ?.sort(compare)
           ?.map(({ id, name, size, favourite, encrypted, compressed }) => (
             <FileItem
               id={id}
@@ -160,17 +193,19 @@ const FileList = ({ route, setRoute }) => {
             />
           ))
           .concat(
-            currentFolders?.map(({ id, name, favourite }) => (
-              <FileItem
-                id={id}
-                caption={name}
-                size="-"
-                isFavorite={favourite}
-                isFolder
-                handleChange={handleChange}
-                key={id}
-              />
-            ))
+            currentFolders
+              ?.sort(compare)
+              ?.map(({ id, name, favourite }) => (
+                <FileItem
+                  id={id}
+                  caption={name}
+                  size="-"
+                  isFavorite={favourite}
+                  isFolder
+                  handleChange={handleChange}
+                  key={id}
+                />
+              ))
           );
       return noFiles();
     }
@@ -243,36 +278,63 @@ const FileList = ({ route, setRoute }) => {
 
   const searchResult_titles = () => {
     if (searchResult?.length > 0) {
-      return searchResult.map(
-        ({ id, name, size, encrypted, compressed, isFolder }) => (
-          <FileItem
-            id={id}
-            caption={name}
-            size={size || "-"}
-            isFavorite={false}
-            isEncrypted={encrypted}
-            isCompressed={compressed}
-            isFolder={isFolder}
-            key={id}
-            shared
-            handleChange={isFolder ? handleChange : null}
-          />
-        )
-      );
+      return searchResult
+        .sort(compare)
+        .map(
+          ({ id, name, size, encrypted, compressed, isFolder, favourite }) => (
+            <FileItem
+              id={id}
+              caption={name}
+              size={size || "-"}
+              isFavorite={favourite}
+              isEncrypted={encrypted}
+              isCompressed={compressed}
+              isFolder={isFolder}
+              key={id}
+              shared
+              handleChange={isFolder ? handleChange : null}
+            />
+          )
+        );
     }
     return noFiles();
+  };
+
+  const handleClickName = (e) => {
+    e.preventDefault();
+    setSort("name");
+  };
+
+  const handleClickDate = (e) => {
+    e.preventDefault();
+    setSort("date");
+  };
+
+  const handleClickSize = (e) => {
+    e.preventDefault();
+    setSort("size");
   };
 
   return (
     <>
       <div className="filesView__titles">
-        <p>Name</p>
-        <p className="filesView__lastmodified">Created at</p>
-        <p>File size</p>
+        <button type="button" onClick={handleClickName}>
+          Name
+        </button>
+        <button type="button" onClick={handleClickDate}>
+          Created at
+        </button>
+        <button type="button" onClick={handleClickSize}>
+          File size
+        </button>
       </div>
+
       {page === "home" && search === "" && homeFiles_titles()}
+
       {page === "favorites" && search === "" && favoriteFiles_titles()}
+
       {page === "shared" && search === "" && sharedFiles_titles()}
+
       {search !== "" && searchResult_titles()}
     </>
   );

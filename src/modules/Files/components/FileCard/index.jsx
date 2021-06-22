@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from "react";
-import "./styles.css";
+import "./styles.scss";
 import PropTypes from "prop-types";
 
 import Icon from "../Icon";
@@ -19,23 +19,22 @@ const FileCard = ({ name, id }) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      if (response.ok)
+      if (response !== 401 && response !== 403)
         response.blob().then((data) => {
           const file = window.URL.createObjectURL(data);
           window.location.assign(file);
         });
+      else {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }
     });
   };
 
   return (
     <button type="button" className="fileCard" onClick={handleClickDownload}>
-      <div className="fileCard--top">
-        <Icon name={name} isFolder={false} />
-      </div>
-
-      <div className="fileCard--bottom">
-        <p>{name}</p>
-      </div>
+      <Icon name={name} isFolder={false} />
+      <p>{name}</p>
     </button>
   );
 };
