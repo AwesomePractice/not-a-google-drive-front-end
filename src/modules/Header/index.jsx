@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import SearchIcon from "@material-ui/icons/Search";
 import PersonIcon from "@material-ui/icons/Person";
-import NotGoogleDriveLogo from "../../media/logo.png";
 
 import { fetchOwner } from "./actions/fetchOwner";
 import { SEACRH_SET_SEARCH } from "./actions/actionTypes";
@@ -35,10 +34,6 @@ const Header = () => {
 
   return (
     <div className="header container">
-      <div className="header_logo">
-        <img src={NotGoogleDriveLogo} alt="NotGoogleDrive" />
-        <span>NotGoogleDrive</span>
-      </div>
       <div className="header_searchContainer">
         <div className="header_searchbar">
           <input

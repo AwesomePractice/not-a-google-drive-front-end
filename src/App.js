@@ -10,9 +10,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import HomeView from "./Views/Home/HomeView";
-import LoginView from "./Views/Login/LoginView";
-import SignupView from "./Views/Signup/SignupView";
+import HomeView from "./views/Home/HomeView";
+import LoginView from "./views/Login/LoginView";
+import SignupView from "./views/Signup/SignupView";
 
 import { getToken } from "./__shared/functions";
 

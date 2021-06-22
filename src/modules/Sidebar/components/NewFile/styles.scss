@@ -1,52 +1,37 @@
-.newFile {
-    display: flex;
-    align-items: center;
+@import "../../../../__shared/styles/vars.scss";
 
-    width: 75%;
+.newFile--container {
+    background-color: $primary-color;
+    color: $text-white;
+    margin-top: 15x;
 }
 
-.newFile__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 40px 10px 30px;
-    background-color: #0492c2;
-    color: #fff;
-    cursor: pointer;
+.modal{
+    &__checkbox--contanier{
+        display: flex;
+        align-items: center;
 
-    width: 100%;
-}
+        margin-bottom: 30px;
+    }
 
-.newFile__container:hover{
-    /* background-color: #0079a2; */
-    transform: scale(1.1);
-    transition: transform .5s ease-in-out;
-}
+    &__checkbox{
+        margin-right: 10px;
+    }
 
-.newFile__container>p{
-    width: 70%;
-    text-align: center;
-}
+    &__upload{
+        width: 100px;
+        height: 30px;
+        background-color: $primary-color;
+        color: $text-white;
+        border-radius: 10px;
+    }
 
-.newFile__container .MuiSvgIcon-root{
-    color: #fff !important;
-    margin-right: auto;
-}
-
-.modal__checkbox--contanier{
-    display: flex;
-    align-items: center;
-
-    margin-bottom: 30px;
-}
-
-.modal__checkbox{
-    margin-right: 10px;
-}
-
-.modal__upload{
-    width: 100px;
-    height: 30px;
-    background-color: #0492c2;
-    color: #fff;
+    &__close{
+        margin-left: auto;
+        cursor: pointer;
+        color: $text-primary;
+    
+        height: 25px;
+        width: 25px;
+    }
 }

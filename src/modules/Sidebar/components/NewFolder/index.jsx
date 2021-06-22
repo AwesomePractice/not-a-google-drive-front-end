@@ -8,6 +8,7 @@ import "./styles.scss";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
@@ -88,10 +89,13 @@ const NewFolder = () => {
   };
 
   return (
-    <div className="newFolder">
-      <div className="newFolder__container" onClick={handleOpen}>
-        <AddIcon />
+    <button className="newFolder sidebar__button" type="button">
+      <div
+        className="newFolder--container sidebar__button--container"
+        onClick={handleOpen}
+      >
         <p>New Folder</p>
+        <AddIcon />
       </div>
 
       <Modal
@@ -101,6 +105,7 @@ const NewFolder = () => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
+          <AiFillCloseCircle className="modal__close" onClick={handleClose} />
           <p style={{ marginBottom: "20px" }}>Text a name</p>
           <input
             type="text"
@@ -119,7 +124,7 @@ const NewFolder = () => {
           </button>
         </div>
       </Modal>
-    </div>
+    </button>
   );
 };
 

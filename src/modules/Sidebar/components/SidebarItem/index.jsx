@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./styles.css";
+import "./styles.scss";
 import PropTypes from "prop-types";
 
 const SidebarItem = ({ icon, label, pageName }) => {
@@ -15,12 +15,12 @@ const SidebarItem = ({ icon, label, pageName }) => {
   return (
     <button type="button" className="sidebarItem" onClick={handleClick}>
       {page === pageName ? (
-        <div className="sidebarItem_main selected">
+        <div className="sidebarItem--container selected">
           {icon}
           <p> {label} </p>
         </div>
       ) : (
-        <div className="sidebarItem_main">
+        <div className="sidebarItem--container">
           {icon}
           <p> {label} </p>
         </div>

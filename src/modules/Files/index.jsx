@@ -11,6 +11,8 @@ import FileList from "./components/FilesList";
 
 import "./styles.scss";
 import "../../main.scss";
+import { setPage } from "../../__shared/actions/setPage";
+import { setRoot } from "./actions/setRoot";
 
 function searchTree(element, matchingId) {
   if (element.id === matchingId) {
@@ -38,25 +40,24 @@ const Files = () => {
   useEffect(() => {
     Promise.all([dispatch(fetchData())]);
 
-    dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
+    dispatch(setRoot(initialRoot));
   }, []);
 
   useEffect(() => {}, [root]);
 
   useEffect(() => {
-    if (page[0] === "-")
-      dispatch({ type: "page/setPage", payload: page.slice(1) });
+    if (page[0] === "-") dispatch(setPage(page.slice(1)));
     setRoute([{ name: page, id: "" }]);
-    dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
+    dispatch(setRoot(initialRoot));
   }, [page]);
 
   const handleChange = (folderId) => {
     if (folderId === "") {
       setRoute([{ name: page, id: "" }]);
-      dispatch({ type: "rootFolder/setRoot", payload: initialRoot });
+      dispatch(setRoot(initialRoot));
     } else {
       const folder = searchTree(initialRoot, folderId);
-      dispatch({ type: "rootFolder/setRoot", payload: folder });
+      dispatch(setRoot(folder));
 
       let idx = -1;
       route.forEach((e, i) => {
@@ -71,7 +72,7 @@ const Files = () => {
   const handleRouteChange = (newRoute) => setRoute(newRoute);
 
   return (
-    <div className="fileView">
+    <div className="files">
       <Path path={route} handleChange={handleChange} />
       <FilesRow page={page} />
       <FileList route={route} setRoute={handleRouteChange} />

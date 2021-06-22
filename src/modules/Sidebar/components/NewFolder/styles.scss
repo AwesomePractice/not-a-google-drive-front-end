@@ -1,41 +1,27 @@
-.newFolder {
-    display: flex;
-    align-items: center;
-    margin: auto 0 10px 0;
+@import "../../../../__shared/styles/vars.scss";
 
-    width: 75%;
-
-}
-
-.newFolder__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 40px 10px 30px;
-    border: 2px solid #0492c2;
+.newFolder--container {
+    border: 2px solid $primary-color;
     color: #0492c2;
-    cursor: pointer;
-
-    width: 100%;
 }
 
-.newFolder__container:hover{
-    transform: scale(1.1);
-    transition: transform .5s ease-in-out;
-}
-
-.newFolder__container> p{
-    width: 70%;
-    text-align: center;
-}
-
-.newFolder__container .MuiSvgIcon-root{
-    margin-right: auto;
-}
 
 .newFolder__submit{
     width: 100px;
     height: 30px;
-    background-color: #0492c2;
-    color: #fff;
+    background-color: $primary-color;
+    color: $text-white;
+    border-radius: 10px;
+
+    &:hover{
+        background-color: $primary-color-hover;
+        transform: scale(1.1);
+        transition: transform .5s ease-in-out;
+    }
+}
+
+.modal__close{
+    margin-left: auto;
+    cursor: pointer;
+    color: $text-primary;
 }
