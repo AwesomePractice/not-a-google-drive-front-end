@@ -17,6 +17,7 @@ import { deleteItem } from "../../actions/deleteItem";
 import Icon from "../Icon";
 
 import { getToken } from "../../../../__shared/functions";
+import { fetchData } from "../../../../__shared/actions/fetchData";
 
 const monthNames = [
   "Jan",
@@ -78,6 +79,7 @@ const FileItem = ({
     e.preventDefault();
 
     Promise.all([dispatch(manageFavorite(id, !isFavorite, isFolder))]);
+    Promise.all([dispatch(fetchData())]);
   };
 
   const handleClickFolder = (e) => {
@@ -155,9 +157,9 @@ const FileItem = ({
         onClick={handleClickFavorite}
       >
         {isFavorite ? (
-          <StarIcon className="fileItem__star--active" />
+          <StarIcon className="fileItem__star" />
         ) : (
-          <StarOutlineIcon className="fileItem__star--disactive" />
+          <StarOutlineIcon className="fileItem__star" />
         )}
       </button>
 
@@ -196,7 +198,7 @@ const FileItem = ({
         <CancelIcon />
       </button>
       <button type="button" className="fileItem__share fileItem__button">
-        <RiShareFill className="MuiSvgIcon-root icon" />
+        <RiShareFill />
       </button>
     </div>
   );

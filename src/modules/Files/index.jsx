@@ -75,7 +75,7 @@ const Files = () => {
     <div className="files">
       <Path path={route} handleChange={handleChange} />
       <div className="container">
-        <FilesRow page={page} />
+        <FilesRow page={page} route={route} />
         <FileList route={route} setRoute={handleRouteChange} />
       </div>
     </div>

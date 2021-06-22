@@ -2,14 +2,14 @@
 /* eslint-disable camelcase */
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 import FileCard from "../FileCard";
 
 import "./styles.scss";
 import { searchTree } from "../../../../__shared/functions";
 
-const FilesRow = () => {
-  const page = useSelector((state) => state.page);
+const FilesRow = ({ page, route }) => {
   const root = useSelector((state) => state.rootFolder);
   const search = useSelector((state) => state.search);
   const initialRoot = useSelector((state) => state.files);
@@ -30,7 +30,7 @@ const FilesRow = () => {
   };
   return (
     <>
-      {page === "home" && homeFiles_row()?.length > 0 && (
+      {page === "home" && route.length === 1 && homeFiles_row()?.length > 0 && (
         <>
           <p className="files__title">Recent Files</p>
           <div className="files__row">{homeFiles_row()}</div>
@@ -38,6 +38,11 @@ const FilesRow = () => {
       )}
     </>
   );
+};
+
+FilesRow.propTypes = {
+  page: PropTypes.string.isRequired,
+  route: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
 };
 
 export default FilesRow;
