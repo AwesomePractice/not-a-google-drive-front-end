@@ -16,12 +16,7 @@ const Sidebar = () => {
   const owner = useSelector((state) => state.owner);
 
   useEffect(() => {}, [owner]);
-
-  const handleClickInput = (e) => {
-    e.preventDefault();
-    navigator.clipboard.writeText(owner.id);
-  };
-
+  
   return (
     <aside className="sidebar">
       <div className="sidebar--container">
@@ -38,12 +33,10 @@ const Sidebar = () => {
         />
 
         <div className="sidebar__buttons--container">
-          <button
-            type="button"
+          <p
             className="myId"
-            onClick={handleClickInput}
             title="Copy"
-          >{`My id: ${owner.id}`}</button>
+          >{`My id: ${owner.id}`}</p>
           <NewFolder />
           <NewFile />
         </div>
