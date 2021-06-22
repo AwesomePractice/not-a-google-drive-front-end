@@ -1,4 +1,6 @@
-import React from "react";
+/* eslint-disable no-undef */
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
@@ -10,27 +12,45 @@ import NewFolder from "./components/NewFolder";
 
 import "./styles.scss";
 
-const index = () => (
-  <aside className="sidebar">
-    <div className="sidebar--container">
-      <SidebarItem icon={<HomeIcon />} label="Home page" pageName="home" />
-      <SidebarItem
-        icon={<PeopleAltIcon />}
-        label="Shared with me"
-        pageName="shared"
-      />
-      <SidebarItem
-        icon={<StarBorderIcon />}
-        label="Favorites"
-        pageName="favorites"
-      />
+const Sidebar = () => {
+  const owner = useSelector((state) => state.owner);
 
-      <div className="sidebar__buttons--container">
-        <NewFolder />
-        <NewFile />
+  useEffect(() => {}, [owner]);
+
+  const handleClickInput = (e) => {
+    e.preventDefault();
+    console.log(owner.id);
+    navigator.clipboard.writeText(owner.id);
+  };
+
+  return (
+    <aside className="sidebar">
+      <div className="sidebar--container">
+        <SidebarItem icon={<HomeIcon />} label="Home page" pageName="home" />
+        <SidebarItem
+          icon={<PeopleAltIcon />}
+          label="Shared with me"
+          pageName="shared"
+        />
+        <SidebarItem
+          icon={<StarBorderIcon />}
+          label="Favorites"
+          pageName="favorites"
+        />
+
+        <div className="sidebar__buttons--container">
+          <button
+            type="button"
+            className="myId"
+            onClick={handleClickInput}
+            title="Copy"
+          >{`My id: ${owner.id}`}</button>
+          <NewFolder />
+          <NewFile />
+        </div>
       </div>
-    </div>
-  </aside>
-);
+    </aside>
+  );
+};
 
-export default index;
+export default Sidebar;

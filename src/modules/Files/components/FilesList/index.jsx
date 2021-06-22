@@ -158,15 +158,12 @@ const FileList = ({ route, setRoute }) => {
   const compare = (a, b) => {
     switch (sort) {
       case "name":
-        console.log(a.name > b.name);
         return a.name > b.name;
       case "size":
-        console.log(a.size > b.size);
         return a.size > b.size;
       case "date": {
         const aDate = new Date(parseInt(a.id.substring(0, 8), 16) * 1000);
         const bDate = new Date(parseInt(b.id.substring(0, 8), 16) * 1000);
-        console.log(aDate > bDate);
         return aDate > bDate;
       }
       default:
@@ -342,21 +339,6 @@ const FileList = ({ route, setRoute }) => {
     </>
   );
 };
-
-// // eslint-disable-next-line react/prop-types
-// const Sort = ({ children, by }) => {
-//   useEffect(() => {}, [children]);
-
-//   };
-
-//   console.log(React.Children.toArray(children).sort(compare));
-//   return <>{by ? React.Children.toArray(children).sort(compare) : children}</>;
-// };
-
-// Sort.propTypes = {
-//   by: PropTypes.string.isRequired,
-//   children: PropTypes.arrayOf(PropTypes.element).isRequired,
-// };
 
 FileList.propTypes = {
   route: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
