@@ -41,7 +41,7 @@ const Files = () => {
     Promise.all([dispatch(fetchData())]);
 
     dispatch(setRoot(initialRoot));
-  }, []);
+  }, [dispatch, initialRoot]);
 
   useEffect(() => {}, [root]);
 
@@ -49,7 +49,7 @@ const Files = () => {
     if (page[0] === "-") dispatch(setPage(page.slice(1)));
     setRoute([{ name: page, id: "" }]);
     dispatch(setRoot(initialRoot));
-  }, [page]);
+  }, [page, dispatch, initialRoot]);
 
   const handleChange = (folderId) => {
     if (folderId === "") {
