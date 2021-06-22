@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
-import React from "react";
+import React, {useState} from "react";
 import "./styles.scss";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
@@ -11,6 +11,9 @@ import StarIcon from "@material-ui/icons/Star";
 import CancelIcon from "@material-ui/icons/Cancel";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { RiShareFill } from "react-icons/ri";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 import { manageFavorite } from "../../actions/manageFavorite";
 import { deleteItem } from "../../actions/deleteItem";
@@ -40,6 +43,30 @@ const decapsulateDateFromId = (id) => {
   return new Date(decapsulatedDate);
 };
 
+function getModalStyle() {
+  return {
+    top: `50%`,
+    left: `50%`,
+    height: `30%`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `center`,
+    flexDirection: `column`,
+    transform: `translate(-50%, -50%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 const FileItem = ({
   id,
   caption,
@@ -51,6 +78,12 @@ const FileItem = ({
   isCompressed,
   shared,
 }) => {
+  const classes = useStyles();
+
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+
   const date = decapsulateDateFromId(id);
   const fileDate = `${date.getDate()} ${
     monthNames[date.getMonth() + 1]
@@ -94,6 +127,48 @@ const FileItem = ({
     Promise.all([dispatch(deleteItem(id, isFolder))]);
   };
 
+
+  function status(response) {
+    if(response.ok) return response;
+    if (response === 401 || response === 403) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    alert("Wrong user id");
+  }
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  const handleChangeModal = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSubmitModal = (e) => {
+    e.preventDefault();
+
+    fetch(`http://34.105.195.56/User/ShareFile`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: name,
+        fileId: id,
+      }),
+    })
+      .then(status)
+      .then(() => Promise.all([dispatch(fetchData())]));
+    setOpen(false);
+    setName("");
+  };
+
   const handleClickDownload = (e) => {
     e.preventDefault();
 
@@ -126,7 +201,7 @@ const FileItem = ({
     ? "fileItem__delete--disable fileItem__button--disable"
     : "fileItem__delete fileItem__button";
 
-  const fileItemShareClass = shared
+  const fileItemShareClass = ( shared || isFolder )
     ? "fileItem__share fileItem__button--disable"
     : "fileItem__share fileItem__button";
 
@@ -206,7 +281,34 @@ const FileItem = ({
         <CancelIcon />
       </button>
       <button type="button" className={fileItemShareClass}>
-        <RiShareFill />
+        <RiShareFill onClick={handleOpenModal}/>
+
+        <Modal
+        open={open}
+        onClose={handleCloseModal}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <AiFillCloseCircle className="modal__close" onClick={handleCloseModal} />
+          <p style={{ marginBottom: "20px" }}>Text a name</p>
+          <input
+            type="text"
+            placeholder="New folder"
+            className="newFolder__input"
+            value={name}
+            onChange={handleChangeModal}
+            style={{ marginBottom: "30px" }}
+          />
+          <button
+            className="newFolder__submit"
+            type="submit"
+            onClick={handleSubmitModal}
+          >
+            Create
+          </button>
+        </div>
+      </Modal>
       </button>
     </div>
   );
