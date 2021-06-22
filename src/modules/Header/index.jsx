@@ -24,7 +24,7 @@ const Header = () => {
 
   useEffect(() => {
     Promise.all([dispatch(fetchOwner())]);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {}, [owner]);
 

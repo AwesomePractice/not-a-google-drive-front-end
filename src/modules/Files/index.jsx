@@ -49,7 +49,7 @@ const Files = () => {
     if (page[0] === "-") dispatch(setPage(page.slice(1)));
     setRoute([{ name: page, id: "" }]);
     dispatch(setRoot(initialRoot));
-  }, [page, dispatch, initialRoot]);
+  }, [page]);
 
   const handleChange = (folderId) => {
     if (folderId === "") {
