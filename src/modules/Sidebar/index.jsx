@@ -19,7 +19,6 @@ const Sidebar = () => {
 
   const handleClickInput = (e) => {
     e.preventDefault();
-    console.log(owner.id);
     navigator.clipboard.writeText(owner.id);
   };
 
