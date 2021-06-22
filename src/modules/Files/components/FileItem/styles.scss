@@ -31,6 +31,8 @@
     &__date, &__size{
         color: $text-primary;
         font-size: $font-size-h3;
+        text-align: center;
+        width: 100%;
     }
 
     &:hover{
@@ -57,11 +59,23 @@
         svg:hover{
             transform: scale(1.1);
         }
+
+        &--disable{
+            visibility: hidden;
+        }
     }
 
-    &__star:hover{
-        transform: scale(1.1);
+    &__star{
+        &:hover{
+            transform: scale(1.1);
+        }
+
+        &--disable{
+            visibility: hidden;
+        }
+        
     }
+    
     
     
 }

@@ -122,6 +122,14 @@ const FileItem = ({
     ? "fileItem__star--disable"
     : "fileItem__star";
 
+  const fileItemDeleteClass = shared
+    ? "fileItem__delete--disable fileItem__button--disable"
+    : "fileItem__delete fileItem__button";
+
+  const fileItemShareClass = shared
+    ? "fileItem__share fileItem__button--disable"
+    : "fileItem__share fileItem__button";
+
   return (
     <div className="fileItem">
       {!isFolder ? (
@@ -192,12 +200,12 @@ const FileItem = ({
 
       <button
         type="button"
-        className="fileItem__delete fileItem__button"
+        className={fileItemDeleteClass}
         onClick={handleClickDelete}
       >
         <CancelIcon />
       </button>
-      <button type="button" className="fileItem__share fileItem__button">
+      <button type="button" className={fileItemShareClass}>
         <RiShareFill />
       </button>
     </div>

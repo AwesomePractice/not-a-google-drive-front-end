@@ -13,7 +13,8 @@
 .filesView__titles{
     display: grid;
     grid-template: "button button button" auto;
-    grid-template-columns: 76% 10% 20%;
+    grid-template-columns: 74% 9.5% 16.5%;
+    // grid-template-columns: 4% 4% 56% 10% 10% 8% 4% 4%;
 
     margin-bottom: 5px;
     font-size: $font-size-p;
