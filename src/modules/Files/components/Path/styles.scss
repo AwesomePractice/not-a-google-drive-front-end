@@ -1,13 +1,40 @@
-.path--container{
-    margin: 0 0 10px 0;
-    padding: 10px 0 0 0;
-}
+@import "../../../../__shared/styles/vars.scss";
 
-.path__button{
-    border: none;
-    background: none;
-    font-size: 12px;
-    font-weight: 500;
-    color: #a9a9a9;
-    cursor: pointer;
+.path{
+    margin: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &--container{
+        padding-bottom: 25px;
+        background-color: $backgroud-primary-color;
+
+        position: -webkit-sticky;
+        position: sticky;
+        top: 100px;
+   }
+
+    &__button{
+        border: none;
+        background: none;
+        font-size: $font-size-p;
+        font-weight: 500;
+        color: #a9a9a9;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin: 0 5px 0 5px;
+            height: 100%;
+            font-size: $font-size-p;
+        }
+
+        &:last-child{
+            color: $text-primary;
+            font-weight: 600;
+        }
+    }
+
 }
