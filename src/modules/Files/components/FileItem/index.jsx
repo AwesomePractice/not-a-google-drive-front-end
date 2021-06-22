@@ -103,10 +103,11 @@ const FileItem = ({
     }).then((response) => {
       if (response !== 401 && response !== 403)
         response.blob().then((data) => {
-          console.log(data);
-          // TODO: fix downloading name and type
           const file = window.URL.createObjectURL(data);
-          window.location.assign(file);
+          const tempLink = document.createElement("a");
+          tempLink.href = file;
+          tempLink.setAttribute("download", caption);
+          tempLink.click();
         });
       else {
         localStorage.removeItem("token");
