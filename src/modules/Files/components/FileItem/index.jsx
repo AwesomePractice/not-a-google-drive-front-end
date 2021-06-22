@@ -291,10 +291,10 @@ const FileItem = ({
       >
         <div style={modalStyle} className={classes.paper}>
           <AiFillCloseCircle className="modal__close" onClick={handleCloseModal} />
-          <p style={{ marginBottom: "20px" }}>Text a name</p>
+          <p style={{ marginBottom: "20px", width: "75%", textAlign: "center" }}>Text the id of user you would like to share with</p>
           <input
             type="text"
-            placeholder="New folder"
+            placeholder="User id"
             className="newFolder__input"
             value={name}
             onChange={handleChangeModal}
@@ -305,7 +305,7 @@ const FileItem = ({
             type="submit"
             onClick={handleSubmitModal}
           >
-            Create
+            Share
           </button>
         </div>
       </Modal>
