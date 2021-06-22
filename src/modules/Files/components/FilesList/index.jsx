@@ -279,9 +279,9 @@ const FileList = ({ route, setRoute }) => {
   return (
     <>
       <div className="filesView__titles">
-        <p>Name</p>
-        <p className="filesView__lastmodified">Created at</p>
-        <p>File size</p>
+        <button type="button">Name</button>
+        <button type="button">Created at</button>
+        <button type="button">File size</button>
       </div>
       {page === "home" && search === "" && homeFiles_titles()}
       {page === "favorites" && search === "" && favoriteFiles_titles()}
