@@ -6,4 +6,4 @@ RUN npm install
 RUN npm install react-scripts@1.1.0 -g
 COPY . .
 EXPOSE 3001
-CMD ["npm ","start"];
+CMD ["npm","start"];
