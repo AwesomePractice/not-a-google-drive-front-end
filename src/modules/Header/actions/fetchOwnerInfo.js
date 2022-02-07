@@ -7,11 +7,12 @@ import {
 } from "./actionTypes";
 
 import { getToken } from "../../../__shared/functions";
+import {serverBaseUri} from "../../../config"
 
 export const fetchOwnerInfo = (id) => (dispatch) => {
   dispatch({ type: OWNER_FETCH_OWNER_INFO });
 
-  const url = "http://34.105.195.56/User/UserInfo";
+  const url = `${serverBaseUri}/User/UserInfo`;
   const token = getToken();
 
   fetch(url, {

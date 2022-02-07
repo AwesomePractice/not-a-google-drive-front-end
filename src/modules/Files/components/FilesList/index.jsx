@@ -12,6 +12,7 @@ import FileItem from "../FileItem";
 
 import "./styles.scss";
 import { SEACRH_SET_SEARCH } from "../../../Header/actions/actionTypes";
+import {serverBaseUri} from "../../../../config"
 
 const noFiles = () => (
   <div className="no-files">
@@ -42,7 +43,7 @@ const FileList = ({ route, setRoute }) => {
 
   useEffect(() => {
     Promise.all([
-      fetch("http://34.105.195.56/FileUploader/AllMyFiles", {
+      fetch(`${serverBaseUri}/FileUploader/AllMyFiles`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,7 +53,7 @@ const FileList = ({ route, setRoute }) => {
         else localStorage.removeItem("token");
       }),
 
-      fetch("http://34.105.195.56/Folder/AllMyFolders", {
+      fetch(`${serverBaseUri}/Folder/AllMyFolders`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -102,7 +103,7 @@ const FileList = ({ route, setRoute }) => {
         payload: folder || initialRoot,
       });
 
-      fetch("http://34.105.195.56/FileUploader/AllFavouriteFiles", {
+      fetch(`${serverBaseUri}/FileUploader/AllFavouriteFiles`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -118,7 +119,7 @@ const FileList = ({ route, setRoute }) => {
         }
       });
 
-      fetch("http://34.105.195.56/Folder/AllFavouriteFolders", {
+      fetch(`${serverBaseUri}/Folder/AllFavouriteFolders`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -22,6 +22,8 @@ import Icon from "../Icon";
 import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
 
+import {serverBaseUri} from "../../../../config"
+
 const monthNames = [
   "Jan",
   "Feb",
@@ -152,7 +154,7 @@ const FileItem = ({
   const handleSubmitModal = (e) => {
     e.preventDefault();
 
-    fetch(`http://34.105.195.56/User/ShareFile`, {
+    fetch(`${serverBaseUri}/User/ShareFile`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -172,7 +174,7 @@ const FileItem = ({
   const handleClickDownload = (e) => {
     e.preventDefault();
 
-    fetch(`http://34.105.195.56/FileUploader/DownloadFile?fileId=${id}`, {
+    fetch(`${serverBaseUri}/FileUploader/DownloadFile?fileId=${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

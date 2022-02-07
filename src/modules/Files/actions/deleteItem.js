@@ -6,13 +6,15 @@ import {
   FILES_DELETE_FILE_SUCCESS,
 } from "./actionTypes";
 
+import {serverBaseUri} from "../../../config"
+
 import { getToken } from "../../../__shared/functions";
 import { fetchData } from "../../../__shared/actions/fetchData";
 
 export const deleteItem = (id, isFolder) => (dispatch) => {
   dispatch({ type: FILES_DELETE_FILE });
 
-  const url = `http://34.105.195.56${
+  const url = `${serverBaseUri}${
     !isFolder ? "/FileUploader/DeleteFile" : "/Folder/DeleteFolder"
   }`;
   const token = getToken();

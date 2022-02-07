@@ -11,6 +11,7 @@ import Modal from "@material-ui/core/Modal";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
+import {serverBaseUri} from "../../../../config"
 
 function getModalStyle() {
   return {
@@ -70,7 +71,7 @@ const NewFolder = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`http://34.105.195.56/Folder/CreateFolder`, {
+    fetch(`${serverBaseUri}/Folder/CreateFolder`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

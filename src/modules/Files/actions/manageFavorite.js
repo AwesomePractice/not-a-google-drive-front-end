@@ -8,11 +8,12 @@ import {
 
 import { getToken } from "../../../__shared/functions";
 import { fetchData } from "../../../__shared/actions/fetchData";
+import {serverBaseUri} from "../../../config"
 
 export const manageFavorite = (id, isFavorite, isFolder) => (dispatch) => {
   dispatch({ type: FILES_MANAGE_FAVORITE });
 
-  const url = `http://34.105.195.56${
+  const url = `${serverBaseUri}${
     !isFolder
       ? "/FileUploader/SwitchFavouriteFile"
       : "/Folder/SwitchFavouriteFolder"

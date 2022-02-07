@@ -11,6 +11,7 @@ import Modal from "@material-ui/core/Modal";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { getToken } from "../../../../__shared/functions";
 import { fetchData } from "../../../../__shared/actions/fetchData";
+import {serverBaseUri} from "../../../../config"
 
 function getModalStyle() {
   return {
@@ -92,7 +93,7 @@ const NewFile = () => {
 
     if (body)
       fetch(
-        `http://34.105.195.56/FileUploader/UploadFile?compressed=${compressed}&encrypted=${encrypted}&favourite=false&folderId=${folder.id}`,
+        `${serverBaseUri}/FileUploader/UploadFile?compressed=${compressed}&encrypted=${encrypted}&favourite=false&folderId=${folder.id}`,
         {
           method: "POST",
           headers: {

@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 
 import "./styles.scss";
 import logo from "../../media/logo.png";
+import {serverBaseUri} from "../../config"
 
-const url = "http://34.105.195.56";
+const url = `${serverBaseUri}`;
 
 async function loginUser(credentials) {
   console.log("credentials", credentials);

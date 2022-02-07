@@ -7,13 +7,15 @@ import Icon from "../Icon";
 
 import { getToken } from "../../../../__shared/functions";
 
+import {serverBaseUri} from "../../../../config"
+
 const FileCard = ({ name, id }) => {
   const token = getToken();
 
   const handleClickDownload = (e) => {
     e.preventDefault();
 
-    fetch(`http://34.105.195.56/FileUploader/DownloadFile?fileId=${id}`, {
+    fetch(`${serverBaseUri}/FileUploader/DownloadFile?fileId=${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

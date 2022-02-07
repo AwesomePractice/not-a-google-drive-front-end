@@ -2,10 +2,11 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import {serverBaseUri} from "../../config"
 
 import "./styles.scss";
 
-const url = "http://34.105.195.56";
+const url = `${serverBaseUri}`;
 
 export default function SignupView() {
   const [login, setLogin] = useState();

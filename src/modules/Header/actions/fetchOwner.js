@@ -8,11 +8,12 @@ import {
 
 import { getToken } from "../../../__shared/functions";
 import { fetchOwnerInfo } from "./fetchOwnerInfo";
+import {serverBaseUri} from "../../../config"
 
 export const fetchOwner = () => (dispatch) => {
   dispatch({ type: OWNER_FETCH_OWNER });
 
-  const url = "http://34.105.195.56/User/FilesInfo";
+  const url = `${serverBaseUri}/User/FilesInfo`;
   const token = getToken();
 
   fetch(url, {

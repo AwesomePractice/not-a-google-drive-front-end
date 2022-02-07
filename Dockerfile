@@ -1,9 +1,11 @@
 FROM node:12
-WORKDIR /usr/src/app
-COPY package*.json ./
-ADD package.json /usr/src/app/package.json
+WORKDIR /app
+
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+
 RUN npm install
-RUN npm install react-scripts@1.1.0 -g
+
 COPY . .
-EXPOSE 3001
-CMD ["npm","start"];
+
+CMD ["npm", "run" ,"start"];
